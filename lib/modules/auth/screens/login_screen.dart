@@ -1,3 +1,4 @@
+import 'package:elex_driver/routes/app_router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl_phone_field/intl_phone_field.dart'; // Import the package
@@ -28,7 +29,6 @@ class LoginPage extends StatelessWidget {
             ),
           ),
           centerTitle: true,
-         
         ),
         body: SafeArea(
           child: SingleChildScrollView(
@@ -38,13 +38,13 @@ class LoginPage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 const SizedBox(height: 24),
-                  IntlPhoneField(
+                IntlPhoneField(
                     controller: phoneEmailController,
                     decoration: InputDecoration(
                       labelText: 'Phone number',
                       filled: true,
                       fillColor: Colors.grey[100],
-                      counter:const Offstage(),
+                      counter: const Offstage(),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(30),
                         borderSide: BorderSide.none,
@@ -56,14 +56,17 @@ class LoginPage extends StatelessWidget {
                           width: 1,
                         ),
                       ),
-                      prefixIcon: const Icon(Icons.phone, color: AppColors.primary,),
+                      prefixIcon: const Icon(
+                        Icons.phone,
+                        color: AppColors.primary,
+                      ),
                     ),
                     autovalidateMode: AutovalidateMode.disabled,
                     initialCountryCode: 'ET'),
                 const SizedBox(height: 15),
 
                 const SizedBox(height: 20),
-                Padding(
+              const  Padding(
                   padding: EdgeInsets.symmetric(
                       horizontal: AppConstant.horizontalPadding),
                   child: const Text.rich(
@@ -110,9 +113,9 @@ class LoginPage extends StatelessWidget {
                         showDialog(
                           context: context,
                           builder: (context) => const ErrorDialog(
-                           title:  'Error',
-                           message:  'Please enter a valid phone number.',
-                           buttonText: 'Done',
+                            title: 'Error',
+                            message: 'Please enter a valid phone number.',
+                            buttonText: 'Done',
                           ),
                         );
                       }
@@ -136,6 +139,7 @@ class LoginPage extends StatelessWidget {
                     GestureDetector(
                       onTap: () {
                         // Get.toNamed('/signup');
+                        Navigator.pushNamed(context, RouteManager.signUp);
                       },
                       child: const Text(
                         'Signup',
