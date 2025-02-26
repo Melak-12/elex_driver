@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'Elex Driver',
         theme: ThemeData(
-          primaryColor: AppColors.primary, 
+          primaryColor: AppColors.primary,
           colorScheme: ColorScheme.fromSwatch().copyWith(
             primary: AppColors.primary,
             secondary: AppColors.secondary,

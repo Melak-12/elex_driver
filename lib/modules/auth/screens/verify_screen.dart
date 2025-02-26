@@ -8,7 +8,7 @@ import 'package:provider/provider.dart';
 // import 'verify_provider.dart';
 
 class VerifyPage extends StatefulWidget {
-  const VerifyPage({Key? key}) : super(key: key);
+  const VerifyPage({super.key});
 
   @override
   State<VerifyPage> createState() => _VerifyPageState();

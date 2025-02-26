@@ -1,8 +1,20 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<!-- <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" /> -->
+<uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:label="elex_driver"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
+        <!-- <meta-data
+        android:name="com.mapbox.AccessToken"
+        android:value="pk.eyJ1IjoibWVsYWIxMiIsImEiOiJjbTdrN2k0c2YwZTZ5MnFzY3g1bGg3d3JpIn0.VBMxLhjuQ1k0KjQ4I3HpSA" /> -->
+        <meta-data
+    android:name="com.google.android.geo.API_KEY"
+    android:value="AIzaSyC8W-m9uk5q_KnaFnkNta6lHgLvwFKu8bQ" />
+
+
         <activity
             android:name=".MainActivity"
             android:exported="true"

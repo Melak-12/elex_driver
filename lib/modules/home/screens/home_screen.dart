@@ -129,7 +129,7 @@ class HomeScreenPage extends StatelessWidget {
       child: InkWell(
         onTap: () {
           Navigator.push(context,
-              MaterialPageRoute(builder: (context) => const MapScreen()));
+              MaterialPageRoute(builder: (context) =>  const MapScreen()));
         },
         borderRadius: BorderRadius.circular(12),
         child: Column(
