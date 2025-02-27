@@ -4,7 +4,6 @@ class AuthProvider extends ChangeNotifier {
   String _countryCode = '+1';
   String _phoneEmail = '';
   bool _isLoading = false;
-
   String get countryCode => _countryCode;
   String get phoneEmail => _phoneEmail;
   bool get isLoading => _isLoading;

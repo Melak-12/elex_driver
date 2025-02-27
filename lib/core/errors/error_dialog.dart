@@ -1,5 +1,6 @@
 import 'package:elex_driver/core/constants/colors/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class ErrorDialog extends StatelessWidget {
   final String title;
@@ -55,7 +56,7 @@ class ErrorDialog extends StatelessWidget {
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
-                onPressed: () => Navigator.pop(context),
+                onPressed: () => context.pop(),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppColors.primary, // Red button
                   foregroundColor: Colors.white, // White text

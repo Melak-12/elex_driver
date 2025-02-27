@@ -1,6 +1,7 @@
 import 'package:elex_driver/routes/app_router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:go_router/go_router.dart';
 import 'package:intl_phone_field/intl_phone_field.dart'; // Import the package
 import 'package:elex_driver/common/custom_button.dart';
 import 'package:elex_driver/core/constants/app_constants.dart';
@@ -26,6 +27,7 @@ class LoginPage extends StatelessWidget {
           ),
         ),
         centerTitle: true,
+        automaticallyImplyLeading: false,
       ),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -62,7 +64,7 @@ class LoginPage extends StatelessWidget {
               const SizedBox(height: 15),
 
               const SizedBox(height: 20),
-              Padding(
+              const Padding(
                 padding: EdgeInsets.symmetric(
                     horizontal: AppConstant.horizontalPadding),
                 child: const Text.rich(
@@ -102,7 +104,7 @@ class LoginPage extends StatelessWidget {
                   text: 'Log in',
                   onPressed: () {
                     if (phoneEmailController.text.isNotEmpty) {
-                      Navigator.pushNamed(context, '/verify');
+                      context.go("/verify");
                       debugPrint(
                           'Logging in with: ${phoneEmailController.text}');
                     } else {
@@ -135,7 +137,7 @@ class LoginPage extends StatelessWidget {
                   GestureDetector(
                     onTap: () {
                       // Get.toNamed('/signup');
-                    },
+                      context.push('/signup');},
                     child: const Text(
                       'Signup',
                       style: TextStyle(

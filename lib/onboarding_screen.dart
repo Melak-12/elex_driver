@@ -1,6 +1,7 @@
 import 'package:elex_driver/core/constants/colors/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:go_router/go_router.dart';
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});
@@ -28,7 +29,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   @override
   Widget build(BuildContext context) {
     return AnnotatedRegion<SystemUiOverlayStyle>(
-      value:  SystemUiOverlayStyle(
+      value: SystemUiOverlayStyle(
         statusBarColor: Colors.black.withOpacity(0.2),
         statusBarIconBrightness: Brightness.light,
       ),
@@ -46,8 +47,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               children: [
                 _buildOnboardingPage(
                     "assets/images/11.png", "Fast & Hot Food Delivery"),
-                _buildOnboardingPage(
-                    "assets/images/foods.png", "Reliable Gas Cylinder Delivery"),
+                _buildOnboardingPage("assets/images/foods.png",
+                    "Reliable Gas Cylinder Delivery"),
                 _buildOnboardingPage(
                     "assets/images/12.png", "Secure Document Delivery"),
               ],
@@ -57,17 +58,19 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               right: 20,
               child: _currentPage < 2
                   ? Row(
-                    children: [
-                      TextButton(
+                      children: [
+                        TextButton(
                           onPressed: _skip,
                           child: const Text(
                             "Skip",
-                            style: TextStyle(color: AppColors.primary, fontSize: 18),
+                            style: TextStyle(
+                                color: AppColors.primary, fontSize: 18),
                           ),
                         ),
-                      const  Icon( Icons.arrow_forward, color: AppColors.primary),
-                    ],
-                  )
+                        const Icon(Icons.arrow_forward,
+                            color: AppColors.primary),
+                      ],
+                    )
                   : const SizedBox(),
             ),
             Positioned(
@@ -85,7 +88,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   ),
                   const SizedBox(height: 20),
                   ElevatedButton(
-                    onPressed: _currentPage == 2 ? _finishOnboarding : _nextPage,
+                    onPressed:
+                        _currentPage == 2 ? _finishOnboarding : _nextPage,
                     style: ElevatedButton.styleFrom(
                       padding: const EdgeInsets.symmetric(
                           horizontal: 50, vertical: 15),
@@ -95,8 +99,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     ),
                     child: Text(
                       _currentPage == 2 ? "Get Started" : "Next",
-                      style:
-                          const TextStyle(fontSize: 18, color: AppColors.primary),
+                      style: const TextStyle(
+                          fontSize: 18, color: AppColors.primary),
                     ),
                   ),
                 ],
@@ -116,16 +120,27 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         Container(
           height: MediaQuery.of(context).size.height * 0.6,
           decoration: BoxDecoration(
+            color: Colors.white,
             borderRadius: const BorderRadius.only(
               bottomLeft: Radius.circular(150),
               bottomRight: Radius.circular(150),
             ),
-            color: Colors.black.withOpacity(0.5),
             image: DecorationImage(
               image: AssetImage(imagePath),
               fit: BoxFit.cover,
             ),
+            // color: Colors.black.withOpacity(0.5),
+            //
           ),
+          // child: Center(
+          //   child: ClipRRect(
+          //     borderRadius: BorderRadius.circular(150),
+          //     child: Image.asset(
+          //       imagePath,
+          //       // height: 200,
+          //       // width: 200,
+          //     ),
+          //   ),)
         ),
         Expanded(
           // height: MediaQuery.of(context).size.height * 0.4,
@@ -176,7 +191,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   }
 
   void _finishOnboarding() {
-    // Navigator.pushReplacementNamed(context, '/layout');
-    Navigator.pushReplacementNamed(context, '/login');
+  
+    context.go( '/login');
   }
 }

@@ -4,6 +4,7 @@ import 'package:elex_driver/modules/auth/providers/verify_provider.dart';
 import 'package:elex_driver/routes/app_router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 // import 'verify_provider.dart';
 
@@ -62,7 +63,7 @@ class _VerifyPageState extends State<VerifyPage> {
         centerTitle: true,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios_new),
-          onPressed: () => Navigator.of(context).pop(),
+          onPressed: () => context.pop(),
         ),
       ),
       body: Padding(
@@ -94,9 +95,9 @@ class _VerifyPageState extends State<VerifyPage> {
                   : () => showDialog(
                         context: context,
                         builder: (context) => const ErrorDialog(
-                        title:  'Error',
-                         message:  'Please enter a valid OTP number.',
-                         buttonText:  'Done',
+                          title: 'Error',
+                          message: 'Please enter a valid OTP number.',
+                          buttonText: 'Done',
                         ),
                       ),
             ),
@@ -152,8 +153,7 @@ class _VerifyPageState extends State<VerifyPage> {
   }
 
   void _onVerifyPressed(VerifyProvider provider) {
-    Navigator.pushNamedAndRemoveUntil(
-        context, RouteManager.layout, (route) => false);
+    context.go("/layout");
     // Get the complete verification code
     final verificationCode = provider.getFullCode();
     print(verificationCode);

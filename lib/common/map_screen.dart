@@ -1,9 +1,9 @@
-import 'package:elex_driver/core/keys/google_api_key.dart';
 import 'package:elex_driver/providers/map_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:google_places_flutter/google_places_flutter.dart';
+import 'package:tuple/tuple.dart';
 
 class MapScreen extends StatefulWidget {
   const MapScreen({super.key});
@@ -15,24 +15,39 @@ class MapScreen extends StatefulWidget {
 class _MapScreenState extends State<MapScreen> {
   final TextEditingController _fromController = TextEditingController();
   final TextEditingController _toController = TextEditingController();
+  late final MapProvider mapProvider;
 
-@override
+  @override
   void initState() {
     super.initState();
+    mapProvider = Provider.of<MapProvider>(context, listen: false);
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      final mapProvider = Provider.of<MapProvider>(context, listen: false);
       mapProvider.getCurrentLocation();
       mapProvider.getDirections(); // Automatically show default route
     });
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Map Test")),
-      body: Consumer<MapProvider>(
-        builder: (context, mapProvider, child) {
+      appBar: AppBar(
+          title: const Text(
+        " ELEX Map",
+        style: TextStyle(fontSize: 15),
+      )),
+      body: Selector<MapProvider,
+          Tuple5<dynamic, dynamic, dynamic, Set<Marker>, Set<Polyline>>>(
+        selector: (_, p0) => Tuple5(
+          p0.fromLocation,
+          p0.toLocation,
+          p0.currentLocation,
+          p0.markers,
+          p0.polylines,
+        ),
+        builder: (context, val, child) {
+          final Set<Marker> markers = val.item4;
+          final Set<Polyline> polylines = val.item5;
+
           return Stack(
             children: [
               GoogleMap(
@@ -42,8 +57,8 @@ class _MapScreenState extends State<MapScreen> {
                 ),
                 myLocationEnabled: true,
                 onMapCreated: mapProvider.setMapController,
-                markers: mapProvider.markers,
-                polylines: mapProvider.polylines,
+                markers: markers,
+                polylines: polylines,
               ),
               Positioned(
                 top: 10,

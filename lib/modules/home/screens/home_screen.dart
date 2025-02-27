@@ -1,4 +1,4 @@
-import 'package:elex_driver/common/map_screen.dart';
+import 'package:go_router/go_router.dart';
 import 'package:elex_driver/core/constants/app_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:elex_driver/core/constants/colors/colors.dart';
@@ -121,15 +121,14 @@ class HomeScreenPage extends StatelessWidget {
     );
   }
 
-  Widget _buildFeatureCard(IconData icon, String title, context) {
+  Widget _buildFeatureCard(IconData icon, String title, BuildContext context) {
     return Card(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       color: AppColors.primary,
       elevation: 4,
       child: InkWell(
         onTap: () {
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) =>  const MapScreen()));
+          context.push('/map');
         },
         borderRadius: BorderRadius.circular(12),
         child: Column(
