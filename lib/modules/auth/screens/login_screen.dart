@@ -69,7 +69,7 @@ class LoginPage extends StatelessWidget {
               const  Padding(
                   padding: EdgeInsets.symmetric(
                       horizontal: AppConstant.horizontalPadding),
-                  child: const Text.rich(
+                  child: Text.rich(
                     TextSpan(
                       text:
                           'By proceeding, you consent to get calls or SMS messages, '

@@ -1,4 +1,3 @@
-import 'package:elex_driver/core/keys/google_api_key.dart';
 import 'package:elex_driver/providers/map_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
