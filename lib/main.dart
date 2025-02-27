@@ -1,4 +1,5 @@
 import 'package:elex_driver/modules/auth/providers/auth_provider.dart';
+import 'package:elex_driver/modules/auth/providers/signup_provider.dart';
 import 'package:elex_driver/modules/auth/providers/verify_provider.dart';
 import 'package:elex_driver/providers/map_provider.dart';
 import 'package:elex_driver/routes/app_router.dart';
@@ -23,6 +24,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => MainProvider()),
         ChangeNotifierProvider(create: (_) => MapProvider()),
         ChangeNotifierProvider(create: (_) => VerifyProvider()),
+        ChangeNotifierProvider(create: (_) => SignupProvider()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

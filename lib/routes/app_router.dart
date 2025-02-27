@@ -1,5 +1,6 @@
 import 'package:elex_driver/layout/screens/main_layout.dart';
 import 'package:elex_driver/modules/auth/screens/login_screen.dart';
+import 'package:elex_driver/modules/auth/screens/signup_screen.dart';
 import 'package:elex_driver/modules/auth/screens/verify_screen.dart';
 import 'package:elex_driver/modules/home/screens/home_screen.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +16,8 @@ class RouteManager {
     switch (settings.name) {
       case loginPage:
         return MaterialPageRoute(builder: (_) => const LoginPage());
+      case signUp:
+        return MaterialPageRoute(builder: (_) => const SignupPage());
       case verify:
         return MaterialPageRoute(builder: (_) => const VerifyPage());
       case homePage:
