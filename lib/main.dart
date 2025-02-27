@@ -2,7 +2,7 @@ import 'package:elex_driver/modules/auth/providers/auth_provider.dart';
 import 'package:elex_driver/modules/auth/providers/verify_provider.dart';
 import 'package:elex_driver/providers/map_provider.dart';
 import 'package:elex_driver/routes/app_router.dart';
-import 'package:elex_driver/splash_screen.dart';
+import 'package:elex_driver/onboarding_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:elex_driver/layout/providers/main_provider.dart';
