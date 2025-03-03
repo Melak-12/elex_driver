@@ -15,9 +15,8 @@ class HomeScreenPage extends StatelessWidget {
           children: [
             Image.asset(
               'assets/images/Logo.png',
-              height: 40,
+              height: 30,
             ),
-            const SizedBox(width: 10),
             const Text(
               "Elex Driver",
               style: TextStyle(

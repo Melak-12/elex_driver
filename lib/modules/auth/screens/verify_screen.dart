@@ -1,7 +1,6 @@
 import 'package:elex_driver/common/custom_button.dart';
 import 'package:elex_driver/core/errors/error_dialog.dart';
 import 'package:elex_driver/modules/auth/providers/verify_provider.dart';
-import 'package:elex_driver/routes/app_router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';

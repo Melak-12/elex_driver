@@ -163,7 +163,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   const SizedBox(height: 20),
                   const Text(
                     "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eget felis ut nunc lacinia.",
-                    style: const TextStyle(
+                    style: TextStyle(
                       color: Colors.white,
                       fontSize: 16,
                     ),

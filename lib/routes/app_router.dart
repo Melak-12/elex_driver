@@ -9,11 +9,11 @@ import 'package:elex_driver/modules/home/screens/home_screen.dart';
 final GoRouter appRouter = GoRouter(
   initialLocation: '/',
   routes: [
-    GoRoute(path: '/', builder: (context, state) => MainLayout()),
-    GoRoute(path: '/login', builder: (context, state) => LoginPage()),
-    GoRoute(path: '/signUp', builder: (context, state) => SignupPage()),
-    GoRoute(path: '/verify', builder: (context, state) => VerifyPage()),
-    GoRoute(path: '/home', builder: (context, state) => HomeScreenPage()),
-    GoRoute(path: '/map', builder: (context, state) => MapScreen()),
+    GoRoute(path: '/', builder: (context, state) => const MainLayout()),
+    GoRoute(path: '/login', builder: (context, state) => const LoginPage()),
+    GoRoute(path: '/signUp', builder: (context, state) => const SignupPage()),
+    GoRoute(path: '/verify', builder: (context, state) => const VerifyPage()),
+    GoRoute(path: '/home', builder: (context, state) => const HomeScreenPage()),
+    GoRoute(path: '/map', builder: (context, state) =>   MapScreen()),
   ],
 );

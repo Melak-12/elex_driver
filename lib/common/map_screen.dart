@@ -1,132 +1,128 @@
-import 'package:elex_driver/providers/map_provider.dart';
+import 'dart:convert';
+import 'package:elex_driver/core/keys/mapbox_token.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:google_places_flutter/google_places_flutter.dart';
-import 'package:tuple/tuple.dart';
+import 'package:mapbox_maps_flutter/mapbox_maps_flutter.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:http/http.dart' as http;
 
 class MapScreen extends StatefulWidget {
-  const MapScreen({super.key});
-
   @override
-  State<MapScreen> createState() => _MapScreenState();
+  State<StatefulWidget> createState() => MapScreenState();
 }
 
-class _MapScreenState extends State<MapScreen> {
-  final TextEditingController _fromController = TextEditingController();
-  final TextEditingController _toController = TextEditingController();
-  late final MapProvider mapProvider;
+class MapScreenState extends State<MapScreen> {
+  MapboxMap? mapboxMap;
+  Point pickupPoint =
+      Point(coordinates: Position(38.7072, 9.0508)); // Example pickup point
+  Point destinationPoint = Point(
+      coordinates: Position(38.8272, 9.0208)); // Example destination point
 
-  @override
-  void initState() {
-    super.initState();
-    mapProvider = Provider.of<MapProvider>(context, listen: false);
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      mapProvider.getCurrentLocation();
-      mapProvider.getDirections(); // Automatically show default route
-    });
+  _onMapCreated(MapboxMap mapboxMap) {
+    this.mapboxMap = mapboxMap;
+    _showUserLocation();
+    _addPointsAndRoute();
+  }
+
+  _showUserLocation() async {
+    var status = await Permission.locationWhenInUse.request();
+    if (status.isGranted) {
+      mapboxMap?.location.updateSettings(
+        LocationComponentSettings(
+          enabled: true,
+          pulsingEnabled: true,
+          showAccuracyRing: true,
+          pulsingColor: Colors.blue.value,
+          locationPuck: LocationPuck(
+            locationPuck2D: LocationPuck2D(
+              topImage: null,
+              bearingImage: null,
+              shadowImage: null,
+              scaleExpression: null,
+            ),
+          ),
+        ),
+      );
+    }
+  }
+
+  void _addPointsAndRoute() async {
+    if (mapboxMap == null) return;
+
+    // Add pickup point
+    await mapboxMap!.style.addSource(GeoJsonSource(
+      id: "pickup-source",
+      data: jsonEncode(pickupPoint.toJson()),
+    ));
+    await mapboxMap!.style.addLayer(SymbolLayer(
+      id: "pickup-layer",
+      sourceId: "pickup-source",
+      iconImage: "marker-15",
+      iconSize: 1.5,
+    ));
+
+    // Add destination point
+    await mapboxMap!.style.addSource(GeoJsonSource(
+      id: "destination-source",
+      data: jsonEncode(destinationPoint.toJson()),
+    ));
+    await mapboxMap!.style.addLayer(SymbolLayer(
+      id: "destination-layer",
+      sourceId: "destination-source",
+      iconImage: "marker-15",
+      iconSize: 1.5,
+    ));
+
+    // Get the route from Mapbox Directions API
+    final response = await http.get(Uri.parse(
+        'https://api.mapbox.com/directions/v5/mapbox/driving/${pickupPoint.coordinates.lng},${pickupPoint.coordinates.lat};${destinationPoint.coordinates.lng},${destinationPoint.coordinates.lat}?geometries=geojson&access_token=$mapboxToken'));
+
+    if (response.statusCode == 200) {
+      final routeData = jsonDecode(response.body);
+      final routeGeometry = routeData['routes'][0]['geometry'];
+
+      // Add route line
+      await mapboxMap!.style.addSource(GeoJsonSource(
+        id: "route-source",
+        data: jsonEncode(routeGeometry),
+      ));
+      await mapboxMap!.style.addLayer(LineLayer(
+        id: "route-layer",
+        sourceId: "route-source",
+        lineColor: Colors.blue.value,
+        lineWidth: 3,
+      ));
+
+      // Calculate distance
+      double distance =
+          routeData['routes'][0]['distance'] / 1000; // Convert to km
+
+      // Show distance
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Distance: ${distance.toStringAsFixed(2)} km')),
+      );
+    } else {
+      print('Failed to get route: ${response.statusCode}');
+    }
   }
 
   @override
   Widget build(BuildContext context) {
+    MapboxOptions.setAccessToken(mapboxToken);
+
+    // Calculate midpoint
+    double midLng =
+        (pickupPoint.coordinates.lng + destinationPoint.coordinates.lng) / 2;
+    double midLat =
+        (pickupPoint.coordinates.lat + destinationPoint.coordinates.lat) / 2;
+
     return Scaffold(
-      appBar: AppBar(
-          title: const Text(
-        " ELEX Map",
-        style: TextStyle(fontSize: 15),
-      )),
-      body: Selector<MapProvider,
-          Tuple5<dynamic, dynamic, dynamic, Set<Marker>, Set<Polyline>>>(
-        selector: (_, p0) => Tuple5(
-          p0.fromLocation,
-          p0.toLocation,
-          p0.currentLocation,
-          p0.markers,
-          p0.polylines,
+      body: MapWidget(
+        key: ValueKey("mapWidget"),
+        onMapCreated: _onMapCreated,
+        cameraOptions: CameraOptions(
+          center: Point(coordinates: Position(midLng, midLat)),
+          zoom: 11.0,
         ),
-        builder: (context, val, child) {
-          final Set<Marker> markers = val.item4;
-          final Set<Polyline> polylines = val.item5;
-
-          return Stack(
-            children: [
-              GoogleMap(
-                initialCameraPosition: const CameraPosition(
-                  target: LatLng(9.0108, 38.7613), // Addis Ababa, Bole
-                  zoom: 14, // Adjust zoom level as needed
-                ),
-                myLocationEnabled: true,
-                onMapCreated: mapProvider.setMapController,
-                markers: markers,
-                polylines: polylines,
-              ),
-              Positioned(
-                top: 10,
-                left: 10,
-                right: 10,
-                child: Column(
-                  children: [
-                    _buildSearchField(
-                      controller: _fromController,
-                      hint: "From",
-                      onSelected: (LatLng location) {
-                        mapProvider.setFromLocation(location);
-                      },
-                    ),
-                    const SizedBox(height: 10),
-                    _buildSearchField(
-                      controller: _toController,
-                      hint: "To",
-                      onSelected: (LatLng location) {
-                        mapProvider.setToLocation(location);
-                      },
-                    ),
-                    const SizedBox(height: 10),
-                    ElevatedButton(
-                      onPressed: () {
-                        mapProvider.getDirections();
-                      },
-                      child: const Text("Go"),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          );
-        },
-      ),
-    );
-  }
-
-  Widget _buildSearchField({
-    required TextEditingController controller,
-    required String hint,
-    required Function(LatLng) onSelected,
-  }) {
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 10),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(8),
-        boxShadow: const [BoxShadow(color: Colors.black26, blurRadius: 5)],
-      ),
-      child: GooglePlaceAutoCompleteTextField(
-        textEditingController: controller,
-        googleAPIKey:
-            "AIzaSyC8W-m9uk5q_KnaFnkNta6lHgLvwFKu8bQ", // Replace with your API Key
-        inputDecoration: InputDecoration(
-          hintText: hint,
-          border: InputBorder.none,
-        ),
-        debounceTime: 600,
-        countries: const ["US"],
-        isLatLngRequired: true,
-        getPlaceDetailWithLatLng: (placeData) {
-          if (placeData.lat != null && placeData.lng != null) {
-            onSelected(LatLng(
-                double.parse(placeData.lat!), double.parse(placeData.lng!)));
-          }
-        },
       ),
     );
   }

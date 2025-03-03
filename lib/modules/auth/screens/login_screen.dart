@@ -1,6 +1,4 @@
-import 'package:elex_driver/routes/app_router.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl_phone_field/intl_phone_field.dart'; // Import the package
 import 'package:elex_driver/common/custom_button.dart';
@@ -67,7 +65,7 @@ class LoginPage extends StatelessWidget {
               const Padding(
                 padding: EdgeInsets.symmetric(
                     horizontal: AppConstant.horizontalPadding),
-                child: const Text.rich(
+                child: Text.rich(
                   TextSpan(
                     text:
                         'By proceeding, you consent to get calls or SMS messages, '

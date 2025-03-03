@@ -10,7 +10,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
 class SignupPage extends StatefulWidget {
-  const SignupPage({Key? key}) : super(key: key);
+  const SignupPage({super.key});
 
   @override
   _SignupPageState createState() => _SignupPageState();
@@ -202,10 +202,12 @@ class _SignupPageState extends State<SignupPage> {
                         ),
                       ),
                       validator: (value) {
-                        if (value?.isEmpty ?? true)
+                        if (value?.isEmpty ?? true) {
                           return 'Please enter a password';
-                        if ((value?.length ?? 0) < 8)
+                        }
+                        if ((value?.length ?? 0) < 8) {
                           return 'Password must be at least 8 characters';
+                        }
                         return null;
                       },
                     ),
@@ -231,10 +233,12 @@ class _SignupPageState extends State<SignupPage> {
                         ),
                       ),
                       validator: (value) {
-                        if (value?.isEmpty ?? true)
+                        if (value?.isEmpty ?? true) {
                           return 'Please confirm your password';
-                        if (value != _passwordController.text)
+                        }
+                        if (value != _passwordController.text) {
                           return 'Passwords do not match';
+                        }
                         return null;
                       },
                     ),
