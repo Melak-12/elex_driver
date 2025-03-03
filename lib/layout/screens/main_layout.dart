@@ -34,13 +34,13 @@ class MainLayout extends StatelessWidget {
       tabBuilder: (_, index) {
         switch (index) {
           case 0:
-            return  HomeScreenPage();
+            return  const HomeScreenPage();
           case 1:
             return   MapScreen();
           case 2:
-            return  GasDeliveryPage();
+            return  const GasDeliveryPage();
           case 3:
-            return  DocumentDeliveryPage();
+            return  const DocumentDeliveryPage();
           default:
             return Container();
         }

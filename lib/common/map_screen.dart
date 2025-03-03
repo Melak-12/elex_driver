@@ -6,6 +6,8 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:http/http.dart' as http;
 
 class MapScreen extends StatefulWidget {
+  const MapScreen({super.key});
+
   @override
   State<StatefulWidget> createState() => MapScreenState();
 }
@@ -117,7 +119,7 @@ class MapScreenState extends State<MapScreen> {
 
     return Scaffold(
       body: MapWidget(
-        key: ValueKey("mapWidget"),
+        key: const ValueKey("mapWidget"),
         onMapCreated: _onMapCreated,
         cameraOptions: CameraOptions(
           center: Point(coordinates: Position(midLng, midLat)),
