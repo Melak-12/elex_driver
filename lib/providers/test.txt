@@ -86,6 +86,41 @@ class MapProvider extends ChangeNotifier {
       height: 10,
       data: list,
     );
+    //! Add the custom image to the map style
+    // await mapboxMap!.style.addStyleImage(
+    //   'custom-icon', // Image ID
+    //   1.0, // Scale
+    //   customImage, // Image data
+    //   false, // SDF
+    //   [], // Stretch X
+    //   [], // Stretch Y
+    //   null, // Content
+    // );
+    // Add pickup point
+    // await mapboxMap!.style.addSource(GeoJsonSource(
+      
+    //   id: "pickup-source",
+    //   data: jsonEncode(pickupPoint.toJson()),
+    // ));
+    await mapboxMap!.style.addLayer(SymbolLayer(
+      id: "pickup-layer",
+      sourceId: "pickup-source",
+      iconImage: "custom-icon", // Use the custom icon
+      iconSize: 1.5,
+      iconAnchor: IconAnchor.CENTER,
+      iconRotationAlignment: IconRotationAlignment.AUTO,
+    ));
+    // Add destination point
+    await mapboxMap!.style.addSource(GeoJsonSource(
+      id: "destination-source",
+      data: jsonEncode(destinationPoint.toJson()),
+    ));
+    await mapboxMap!.style.addLayer(SymbolLayer(
+      id: "destination-layer",
+      sourceId: "destination-source",
+      iconImage: "custom-icon", // Use the custom icon
+      iconSize: 1.5,
+    ));
 
     // Get the route from Mapbox Directions API
     final response = await http.get(Uri.parse(
@@ -106,24 +141,7 @@ class MapProvider extends ChangeNotifier {
         lineColor: Colors.blue.value,
         lineWidth: 3,
       ));
-      // await mapboxMap!.style.addLayer(SymbolLayer(
-      //   id: "pickup-layer",
-      //   // sourceId: "pickup-source",
-      //   sourceId: "route-layer",
-      //   iconImage: "custom-icon", // Use the custom icon
-      //   iconSize: 11.5,
-      //   iconAnchor: IconAnchor.CENTER,
-      //   iconRotationAlignment: IconRotationAlignment.AUTO,
-      // ));
-       await mapboxMap!.style.addStyleImage(
-        'custom-icon', // Image ID
-        1.0, // Scale
-        customImage, // Image data
-        false, // SDF
-        [], // Stretch X
-        [], // Stretch Y
-        null, // Content
-      );
+
       // Calculate distance
       double distance =
           routeData['routes'][0]['distance'] / 1000; // Convert to km

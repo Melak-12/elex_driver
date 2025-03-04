@@ -102,7 +102,7 @@ class LoginPage extends StatelessWidget {
                   text: 'Log in',
                   onPressed: () {
                     if (phoneEmailController.text.isNotEmpty) {
-                      context.go("/verify");
+                      context.push("/verify");
                       debugPrint(
                           'Logging in with: ${phoneEmailController.text}');
                     } else {
@@ -135,7 +135,8 @@ class LoginPage extends StatelessWidget {
                   GestureDetector(
                     onTap: () {
                       // Get.toNamed('/signup');
-                      context.push('/signup');},
+                      context.push('/signup');
+                    },
                     child: const Text(
                       'Signup',
                       style: TextStyle(
