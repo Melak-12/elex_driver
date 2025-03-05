@@ -37,7 +37,6 @@ class _MapScreenState extends State<MapScreen> {
         title: const Text("Map Screen"),
       ),
       body: Selector<MapProvider, MapboxMap?>(
-        // Selector will listen for changes in the MapboxMap object
         selector: (_, mapProvider) => mapProvider.mapboxMap,
         builder: (_, mapboxMap, child) {
           if (mapboxMap == null) {

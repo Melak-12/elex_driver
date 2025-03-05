@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:location/location.dart';
 import 'package:mapbox_maps_flutter/mapbox_maps_flutter.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:http/http.dart' as http;
@@ -8,130 +9,137 @@ import 'package:elex_driver/core/keys/mapbox_token.dart';
 
 class MapProvider extends ChangeNotifier {
   MapboxMap? mapboxMap;
+  PointAnnotationManager? pointAnnotationManager;
+  Point destinationPoint = Point(coordinates: Position(38.7072, 9.0508));
+  Point pickupPoint = Point(coordinates: Position(38.8272, 9.0208));
+  Point? _currentPoint;
 
-  // Points for pickup and destination
-  Point pickupPoint = Point(coordinates: Position(38.7072, 9.0508));
-  Point destinationPoint = Point(coordinates: Position(38.8272, 9.0208));
+  Point get currentPoint => _currentPoint!;
 
-  // Midpoint values
-  double? _midLng;
-  double? _midLat;
+  set currentPoint(Point value) {
+    _currentPoint = value;
+    notifyListeners();
+  }
 
-  double? get midLng => _midLng;
-  double? get midLat => _midLat;
-
-  void onMapCreated(MapboxMap mapboxMap) {
-    this.mapboxMap = mapboxMap;
+  void onMapCreated(MapboxMap map) {
+    mapboxMap = map;
     _showUserLocation();
     _addPointsAndRoute();
-    _calculateMidpoint(); // Calculate midpoint when the map is created
   }
 
-  void updatePickupPoint(Position position) {
-    pickupPoint = Point(coordinates: position);
-    _calculateMidpoint(); // Recalculate midpoint when pickup point changes
-    notifyListeners(); // Notify listeners to update the UI
+  /// [UpdateMethodToUpdateThePoints]
+
+  void updatePoint(bool isPickup, Position position) {
+    isPickup
+        ? pickupPoint = Point(coordinates: position)
+        : destinationPoint = Point(coordinates: position);
+    notifyListeners();
   }
 
-  void updateDestinationPoint(Position position) {
-    destinationPoint = Point(coordinates: position);
-    _calculateMidpoint(); // Recalculate midpoint when destination point changes
-    notifyListeners(); // Notify listeners to update the UI
-  }
+  final Location location = Location();
 
-  void _calculateMidpoint() {
-    _midLng =
-        (pickupPoint.coordinates.lng + destinationPoint.coordinates.lng) / 2;
-    _midLat =
-        (pickupPoint.coordinates.lat + destinationPoint.coordinates.lat) / 2;
-  }
+  /// [MethodToGetTheUserLocation] method to get the user location
 
   Future<void> _showUserLocation() async {
-    var status = await Permission.locationWhenInUse.request();
-    if (status.isGranted && mapboxMap != null) {
-      // Load the custom icon from assets
-      final ByteData bytes =
-          await rootBundle.load('assets/images/location.png');
-      final Uint8List list = bytes.buffer.asUint8List();
-
-      mapboxMap!.location.updateSettings(
-        LocationComponentSettings(
-          enabled: true,
-          pulsingEnabled: true,
-          showAccuracyRing: true,
-          accuracyRingBorderColor: Colors.blue.value,
-          pulsingColor: Colors.blue.value,
-          locationPuck: LocationPuck(
+    if (await Permission.locationWhenInUse.request().isGranted &&
+        mapboxMap != null) {
+      mapboxMap!.location.updateSettings(LocationComponentSettings(
+        enabled: true,
+        pulsingEnabled: true,
+        showAccuracyRing: true,
+        accuracyRingBorderColor: Colors.blue.value,
+        pulsingColor: Colors.blue.value,
+        locationPuck: LocationPuck(
             locationPuck2D: LocationPuck2D(
-              topImage: list, // Set the custom icon here
+                // topImage: list,
+                )),
+      ));
 
-              bearingImage: null,
-              shadowImage: null,
-              scaleExpression: null,
-            ),
-          ),
+      //! Get the camera state
+      final cameraState = await mapboxMap!.getCameraState();
+
+      // currentPoint = Point(
+      //     coordinates: Position(cameraState.center.coordinates.lng,
+      //         cameraState.center.coordinates.lat));
+      //Todo get the current location of the user coordinate points
+
+      // Fetch current location
+      LocationData currentLocation = await location.getLocation();
+      currentPoint = Point(
+        coordinates: Position(
+          currentLocation.longitude!,
+          currentLocation.latitude!,
         ),
       );
+      // Optionally, update the map's camera position
+      // mapboxMap?.moveCamera(CameraUpdate.newLatLng(
+      //   LatLng(currentLocation.latitude!, currentLocation.longitude!),
+      // ));
+      print(
+          'Camera position:.................... ${_currentPoint?.coordinates.lat}');
     }
   }
 
+  /// [MethodToAddPointsAndRoute]
+
   Future<void> _addPointsAndRoute() async {
     if (mapboxMap == null) return;
+    pointAnnotationManager =
+        await mapboxMap!.annotations.createPointAnnotationManager();
+    final imageData = (await rootBundle.load('assets/images/location.png'))
+        .buffer
+        .asUint8List();
 
-    // Load the custom icon from assets
-    final ByteData bytes = await rootBundle.load('assets/images/location.png');
-    final Uint8List list = bytes.buffer.asUint8List();
-    final MbxImage customImage = MbxImage(
-      width: 10,
-      height: 10,
-      data: list,
-    );
+    pointAnnotationManager?.create(PointAnnotationOptions(
+        geometry: pickupPoint, image: imageData, iconSize: 1.0));
+    pointAnnotationManager?.create(PointAnnotationOptions(
+        geometry: destinationPoint, image: imageData, iconSize: 1.0));
 
-    // Get the route from Mapbox Directions API
     final response = await http.get(Uri.parse(
         'https://api.mapbox.com/directions/v5/mapbox/driving/${pickupPoint.coordinates.lng},${pickupPoint.coordinates.lat};${destinationPoint.coordinates.lng},${destinationPoint.coordinates.lat}?geometries=geojson&access_token=$mapboxToken'));
+    if (_currentPoint != null) {
+      final response2 = await http.get(Uri.parse(
+          'https://api.mapbox.com/directions/v5/mapbox/driving/${_currentPoint!.coordinates.lng},${_currentPoint!.coordinates.lat};${pickupPoint.coordinates.lng},${pickupPoint.coordinates.lat}?geometries=geojson&access_token=$mapboxToken'));
+      if (response2.statusCode == 200) {
+        final routeData = jsonDecode(response2.body);
+        final routeGeometry = routeData['routes'][0]['geometry'];
+
+        double distance = routeData['routes'][0]['distance'] / 1000;
+        print('Distance: $distance km');
+
+        await mapboxMap!.style.addSource(GeoJsonSource(
+            id: "route-source1", data: jsonEncode(routeGeometry)));
+
+        await mapboxMap!.style.addLayer(LineLayer(
+          id: "route-layer1",
+          sourceId: "route-source1",
+          lineColor: Colors.red.value,
+          lineWidth: 4.0,
+        ));
+      }
+    } else {
+      print('No current location');
+    }
 
     if (response.statusCode == 200) {
       final routeData = jsonDecode(response.body);
       final routeGeometry = routeData['routes'][0]['geometry'];
 
-      // Add route line
-      await mapboxMap!.style.addSource(GeoJsonSource(
-        id: "route-source",
-        data: jsonEncode(routeGeometry),
-      ));
+      double distance = routeData['routes'][0]['distance'] / 1000;
+      print('Distance: $distance km');
+
+      await mapboxMap!.style.addSource(
+          GeoJsonSource(id: "route-source", data: jsonEncode(routeGeometry)));
+
       await mapboxMap!.style.addLayer(LineLayer(
         id: "route-layer",
         sourceId: "route-source",
         lineColor: Colors.blue.value,
-        lineWidth: 3,
+        lineWidth: 4.0,
       ));
-      // await mapboxMap!.style.addLayer(SymbolLayer(
-      //   id: "pickup-layer",
-      //   // sourceId: "pickup-source",
-      //   sourceId: "route-layer",
-      //   iconImage: "custom-icon", // Use the custom icon
-      //   iconSize: 11.5,
-      //   iconAnchor: IconAnchor.CENTER,
-      //   iconRotationAlignment: IconRotationAlignment.AUTO,
-      // ));
-       await mapboxMap!.style.addStyleImage(
-        'custom-icon', // Image ID
-        1.0, // Scale
-        customImage, // Image data
-        false, // SDF
-        [], // Stretch X
-        [], // Stretch Y
-        null, // Content
-      );
-      // Calculate distance
-      double distance =
-          routeData['routes'][0]['distance'] / 1000; // Convert to km
-      print('Distance:_____________________ $distance km');
-      // Show distance
-      notifyListeners();
     } else {
       print('Failed to get route: ${response.statusCode}');
     }
+    notifyListeners();
   }
 }
