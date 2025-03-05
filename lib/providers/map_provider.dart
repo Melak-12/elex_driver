@@ -43,6 +43,11 @@ class MapProvider extends ChangeNotifier {
   Future<void> _showUserLocation() async {
     if (await Permission.locationWhenInUse.request().isGranted &&
         mapboxMap != null) {
+   
+        final ByteData bytes =
+          await rootBundle.load('assets/images/location.png');
+      final Uint8List list = bytes.buffer.asUint8List();
+          
       mapboxMap!.location.updateSettings(LocationComponentSettings(
         enabled: true,
         pulsingEnabled: true,
@@ -51,7 +56,7 @@ class MapProvider extends ChangeNotifier {
         pulsingColor: Colors.blue.value,
         locationPuck: LocationPuck(
             locationPuck2D: LocationPuck2D(
-                // topImage: list,
+                topImage: list,
                 )),
       ));
 
@@ -76,7 +81,7 @@ class MapProvider extends ChangeNotifier {
       //   LatLng(currentLocation.latitude!, currentLocation.longitude!),
       // ));
       print(
-          'Camera position:.................... ${_currentPoint?.coordinates.lat}');
+          'Camera position:.................... ${_currentPoint!.coordinates.lat + pickupPoint.coordinates.lat}');
     }
   }
 
@@ -94,6 +99,11 @@ class MapProvider extends ChangeNotifier {
         geometry: pickupPoint, image: imageData, iconSize: 1.0));
     pointAnnotationManager?.create(PointAnnotationOptions(
         geometry: destinationPoint, image: imageData, iconSize: 1.0));
+    if(_currentPoint != null){
+      pointAnnotationManager?.create(PointAnnotationOptions(
+        geometry: _currentPoint!, image: imageData, iconSize: 1.0));
+    }
+
 
     final response = await http.get(Uri.parse(
         'https://api.mapbox.com/directions/v5/mapbox/driving/${pickupPoint.coordinates.lng},${pickupPoint.coordinates.lat};${destinationPoint.coordinates.lng},${destinationPoint.coordinates.lat}?geometries=geojson&access_token=$mapboxToken'));
