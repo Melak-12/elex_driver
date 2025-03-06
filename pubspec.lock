@@ -416,6 +416,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.0.0"
+  live_indicator:
+    dependency: "direct main"
+    description:
+      name: live_indicator
+      sha256: "0c0af456acd4e25ed6711952e5a8eb089f5f7ca38185225c7040b4ac0ced0eaa"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.4"
   location:
     dependency: "direct main"
     description:

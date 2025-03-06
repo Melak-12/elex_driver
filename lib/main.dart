@@ -1,3 +1,4 @@
+import 'package:elex_driver/modules/profile/providers/profileProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:elex_driver/modules/auth/providers/auth_provider.dart';
@@ -24,6 +25,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => MapProvider()),
         ChangeNotifierProvider(create: (_) => VerifyProvider()),
         ChangeNotifierProvider(create: (_) => SignupProvider()),
+        ChangeNotifierProvider(create: (_) => ProfileProvider()),
       ],
       child: MaterialApp.router(
         debugShowCheckedModeBanner: false,

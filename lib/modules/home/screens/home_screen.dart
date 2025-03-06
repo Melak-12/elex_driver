@@ -1,151 +1,152 @@
-import 'package:go_router/go_router.dart';
+import 'package:elex_driver/common/map_screen.dart';
 import 'package:elex_driver/core/constants/app_constants.dart';
-import 'package:flutter/material.dart';
 import 'package:elex_driver/core/constants/colors/colors.dart';
+import 'package:elex_driver/modules/home/screens/deiver_orders_page.dart';
 
-class HomeScreenPage extends StatelessWidget {
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:go_router/go_router.dart';
+import 'package:flutter/cupertino.dart';
+import "package:live_indicator/live_indicator.dart";
+
+class HomeScreenPage extends StatefulWidget {
   const HomeScreenPage({super.key});
 
   @override
+  _HomeScreenPageState createState() => _HomeScreenPageState();
+}
+
+class _HomeScreenPageState extends State<HomeScreenPage> {
+  int _selectedTab = 0;
+
+  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        // backgroundColor: AppColors.primary,
-        title: Row(
-          children: [
-            Image.asset(
-              'assets/images/Logo.png',
-              height: 30,
-            ),
-            const Text(
-              "Elex Driver",
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
-              ),
-            ),
+    return AnnotatedRegion<SystemUiOverlayStyle>(
+      value: SystemUiOverlayStyle(
+          statusBarColor: Colors.black.withOpacity(0.2),
+          statusBarIconBrightness: Brightness.dark),
+      child: Scaffold(
+        appBar: AppBar(
+          elevation: 0,
+          title: Row(
+            children: [
+              Image.asset('assets/images/Logo.png', height: 30),
+              const SizedBox(width: 8),
+            ],
+          ),
+          actions: [
+            _buildIconWithBadge(Icons.notifications, '2', () {}),
+            _buildIconWithBadge(Icons.shopping_cart, '2', () {}),
           ],
         ),
-        actions: [
-          Stack(
-            children: [
-              IconButton(
-                icon: const Icon(Icons.notifications, color: AppColors.primary),
-                onPressed: () {},
-              ),
-              Positioned(
-                right: 7,
-                top: 0,
-                child: Container(
-                  padding: const EdgeInsets.all(4),
-                  decoration: const BoxDecoration(
-                    color: Colors.red,
-                    shape: BoxShape.circle,
-                  ),
-                  child: const Text(
-                    '2', // Example cart items count
-                    style: TextStyle(fontSize: 12, color: Colors.white),
-                  ),
-                ),
-              ),
-            ],
-          ),
-          Stack(
-            children: [
-              IconButton(
-                icon: const Icon(Icons.shopping_cart, color: AppColors.primary),
-                onPressed: () {
-                  // Handle cart tap
-                },
-              ),
-              Positioned(
-                right: 4,
-                top: 0,
-                child: Container(
-                  padding: const EdgeInsets.all(4),
-                  decoration: const BoxDecoration(
-                    color: Colors.red,
-                    shape: BoxShape.circle,
-                  ),
-                  child: const Text(
-                    '2', // Example cart items count
-                    style: TextStyle(fontSize: 12, color: Colors.white),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ],
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(AppConstant.screenPadding),
-        child: Column(
+        body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
-              "Welcome, Driver!",
-              style: TextStyle(
-                fontSize: 22,
-                fontWeight: FontWeight.bold,
-                color: AppColors.primary,
-              ),
+            _buildStatusRow(),
+            const SizedBox(height: 10),
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                  horizontal: AppConstant.horizontalPadding),
+              child: _buildTabs(),
             ),
             const SizedBox(height: 10),
-            const Text(
-              "Here are your tasks for today:",
-              style: TextStyle(fontSize: 16, color: Colors.grey),
-            ),
-            const SizedBox(height: 20),
             Expanded(
-              child: GridView.count(
-                crossAxisCount: 2,
-                crossAxisSpacing: 20,
-                mainAxisSpacing: 20,
-                children: [
-                  _buildFeatureCard(
-                      Icons.delivery_dining, "New Orders", context),
-                  _buildFeatureCard(
-                      Icons.local_shipping, "Active Deliveries", context),
-                  _buildFeatureCard(Icons.history, "Delivery History", context),
-                  _buildFeatureCard(
-                      Icons.account_balance_wallet, "Earnings", context),
-                  _buildFeatureCard(Icons.support_agent, "Support", context),
-                  _buildFeatureCard(Icons.settings, "Settings", context),
-                ],
-              ),
-            ),
+                child: _selectedTab == 0
+                    ? const DriverOrdersPage()
+                    : const MapScreen()),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildFeatureCard(IconData icon, String title, BuildContext context) {
-    return Card(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-      color: AppColors.primary,
-      elevation: 4,
-      child: InkWell(
+  Widget _buildTabs() {
+    return Row(
+      children: [
+        _buildTabButton("Deliveries", 0),
+        const SizedBox(width: 8),
+        _buildTabButton("Map View", 1),
+      ],
+    );
+  }
+
+  Widget _buildTabButton(String title, int index) {
+    bool isSelected = _selectedTab == index;
+    return Expanded(
+      child: GestureDetector(
         onTap: () {
-          context.push('/map');
+          setState(() {
+            _selectedTab = index;
+          });
+          // context.go(index == 0 ? '/map' : '/map');
         },
-        borderRadius: BorderRadius.circular(12),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(icon, size: 40, color: AppColors.secondary),
-            const SizedBox(height: 10),
-            Text(
-              title,
-              style: const TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-                color: AppColors.secondary,
-              ),
+        child: Container(
+          height: 40,
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+            color: isSelected ? AppColors.primary : Colors.white,
+            borderRadius: BorderRadius.circular(8),
+            border: Border.all(color: AppColors.primary),
+          ),
+          child: Text(
+            title,
+            style: TextStyle(
+              color: isSelected ? Colors.white : AppColors.primary,
+              fontWeight: FontWeight.bold,
             ),
-          ],
+          ),
         ),
       ),
+    );
+  }
+
+  Widget _buildStatusRow() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Row(
+            children: [
+              const Icon(CupertinoIcons.flag_fill, color: AppColors.primary),
+              LiveIndicator(
+                color: Colors.greenAccent.shade700,
+                radius: 5.5,
+                spreadRadius: 8,
+                spreadDuration: const Duration(microseconds: 100),
+                waitDuration: const Duration(milliseconds: 500),
+              )
+            ],
+          ),
+          const Text(
+            "Today: 7 Deliveries • 1500birr",
+            style: TextStyle(
+                fontSize: 15,
+                fontWeight: FontWeight.bold,
+                color: AppColors.primary),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildIconWithBadge(IconData icon, String count, VoidCallback onTap) {
+    return Stack(
+      children: [
+        IconButton(
+            icon: Icon(icon, color: AppColors.primary), onPressed: onTap),
+        Positioned(
+          right: 7,
+          top: 5,
+          child: Container(
+            padding: const EdgeInsets.all(4),
+            decoration:
+                const BoxDecoration(color: Colors.red, shape: BoxShape.circle),
+            child: Text(count,
+                style: const TextStyle(fontSize: 12, color: Colors.white)),
+          ),
+        ),
+      ],
     );
   }
 }

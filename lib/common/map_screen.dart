@@ -22,8 +22,8 @@ class _MapScreenState extends State<MapScreen> {
 
   @override
   Widget build(BuildContext context) {
-    MapboxOptions.setAccessToken(mapboxToken); 
-    
+    MapboxOptions.setAccessToken(mapboxToken);
+
     // Calculate midpoint
     double midLng = (mapProvider!.pickupPoint.coordinates.lng +
             mapProvider!.destinationPoint.coordinates.lng) /
@@ -32,11 +32,9 @@ class _MapScreenState extends State<MapScreen> {
             mapProvider!.destinationPoint.coordinates.lat) /
         2;
 
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("Map Screen"),
-      ),
-      body: Selector<MapProvider, MapboxMap?>(
+    return SafeArea(
+
+      child: Selector<MapProvider, MapboxMap?>(
         selector: (_, mapProvider) => mapProvider.mapboxMap,
         builder: (_, mapboxMap, child) {
           if (mapboxMap == null) {
