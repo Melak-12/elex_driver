@@ -63,7 +63,6 @@ class _DriverOrdersPageState extends State<DriverOrdersPage> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-
       child: Padding(
         padding: const EdgeInsets.symmetric(
             horizontal: AppConstant.horizontalPadding),
@@ -101,9 +100,9 @@ class _DriverOrdersPageState extends State<DriverOrdersPage> {
                               Text(
                                 order['id'],
                                 style: const TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 16,color: AppColors.primary
-                                ),
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16,
+                                    color: AppColors.primary),
                               ),
                               _buildStatusBadge(order['status']),
                             ],
@@ -189,6 +188,7 @@ class _DriverOrdersPageState extends State<DriverOrdersPage> {
       ),
     );
   }
+
   Widget _buildStatusBadge(String status) {
     Color ringColor;
     Color textColor;
@@ -281,9 +281,3 @@ class _DriverOrdersPageState extends State<DriverOrdersPage> {
   }
 }
 
-void main() {
-  runApp(const MaterialApp(
-    home: DriverOrdersPage(),
-    debugShowCheckedModeBanner: false,
-  ));
-}
