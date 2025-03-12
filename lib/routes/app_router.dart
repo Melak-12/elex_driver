@@ -18,7 +18,7 @@ final GoRouter appRouter = GoRouter(
     GoRoute(path: '/signUp', builder: (context, state) => const SignupPage()),
     GoRoute(path: '/verify', builder: (context, state) => const VerifyPage()),
     GoRoute(path: '/home', builder: (context, state) => const HomeScreenPage()),
-    GoRoute(path: '/map', builder: (context, state) => MapScreen()),
+    GoRoute(path: '/map', builder: (context, state) => const MapScreen()),
     GoRoute(path: '/gas', builder: (context, state) => const GasDeliveryPage()),
     GoRoute(path: '/profile', builder: (context, state) => const ProfilePage()),
   ],

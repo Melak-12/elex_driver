@@ -7,7 +7,7 @@ import 'package:provider/provider.dart';
 // Import the provider file
 
 class ProfilePage extends StatefulWidget {
-  const ProfilePage({Key? key}) : super(key: key);
+  const ProfilePage({super.key});
 
   @override
   _ProfilePageState createState() => _ProfilePageState();
@@ -78,7 +78,7 @@ class _ProfilePageState extends State<ProfilePage>
   }
 
   Widget _buildProfileHeader() {
-    return Container(
+    return SizedBox(
       height: 220,
       // decoration: BoxDecoration(
       //   gradient: LinearGradient(
@@ -230,7 +230,7 @@ class _ProfilePageState extends State<ProfilePage>
           const SizedBox(width: 10),
           Text(
             title,
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold,
               color: AppColors.primary,
@@ -517,7 +517,7 @@ class _ProfilePageState extends State<ProfilePage>
       ),
       trailing: CupertinoSwitch(
         value: value,
-        activeColor: iconColor,
+        activeTrackColor: iconColor,
         onChanged: onChanged,
       ),
     );
