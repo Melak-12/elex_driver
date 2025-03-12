@@ -1,5 +1,6 @@
 import 'package:elex_driver/common/map_screen.dart';
 import 'package:elex_driver/core/constants/app_constants.dart';
+import 'package:elex_driver/core/constants/assets.dart';
 import 'package:elex_driver/core/constants/colors/colors.dart';
 import 'package:elex_driver/modules/home/screens/deiver_orders_page.dart';
 
@@ -26,10 +27,11 @@ class _HomeScreenPageState extends State<HomeScreenPage> {
           statusBarIconBrightness: Brightness.dark),
       child: Scaffold(
         appBar: AppBar(
+          surfaceTintColor: Colors.white,
           elevation: 0,
           title: Row(
             children: [
-              Image.asset('assets/images/Logo.png', height: 30),
+              Image.asset(AppAssets.logo, height: 30),
               const SizedBox(width: 8),
             ],
           ),
@@ -133,7 +135,7 @@ class _HomeScreenPageState extends State<HomeScreenPage> {
     return Stack(
       children: [
         IconButton(
-            icon: Icon(icon, color: AppColors.primary), onPressed: onTap),
+            icon: Icon(icon, color: AppColors.primary.withValues(green: 2.3)), onPressed: onTap),
         Positioned(
           right: 7,
           top: 5,

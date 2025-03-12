@@ -1,4 +1,5 @@
 import 'package:elex_driver/core/constants/colors/colors.dart';
+import 'package:elex_driver/routes/app_router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
@@ -191,7 +192,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   }
 
   void _finishOnboarding() {
-  
-    context.go( '/login');
+    context.go(login);
   }
 }

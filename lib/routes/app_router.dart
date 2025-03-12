@@ -9,17 +9,27 @@ import 'package:elex_driver/modules/auth/screens/signup_screen.dart';
 import 'package:elex_driver/modules/auth/screens/verify_screen.dart';
 import 'package:elex_driver/modules/home/screens/home_screen.dart';
 
+const String onBoarding = '/';
+const String layout = '/layout';
+const String login = '/login';
+const String signUp = '/signUp';
+const String verify = '/verify';
+const String home = '/home';
+const String map = '/map';
+const String gas = '/gas';
+const String profile = '/profile';
+
 final GoRouter appRouter = GoRouter(
-  initialLocation: '/',
+  initialLocation: layout,
   routes: [
-    GoRoute(path: '/', builder: (context, state) => const OnboardingScreen()),
-    GoRoute(path: '/layout', builder: (context, state) => const MainLayout()),
-    GoRoute(path: '/login', builder: (context, state) => const LoginPage()),
-    GoRoute(path: '/signUp', builder: (context, state) => const SignupPage()),
-    GoRoute(path: '/verify', builder: (context, state) => const VerifyPage()),
-    GoRoute(path: '/home', builder: (context, state) => const HomeScreenPage()),
-    GoRoute(path: '/map', builder: (context, state) => const MapScreen()),
-    GoRoute(path: '/gas', builder: (context, state) => const GasDeliveryPage()),
-    GoRoute(path: '/profile', builder: (context, state) => const ProfilePage()),
+    GoRoute(path: onBoarding, builder: (context, state) => const OnboardingScreen()),
+    GoRoute(path: layout, builder: (context, state) => const MainLayout()),
+    GoRoute(path: login, builder: (context, state) => const LoginPage()),
+    GoRoute(path: signUp, builder: (context, state) => const SignupPage()),
+    GoRoute(path: verify, builder: (context, state) => const VerifyPage()),
+    GoRoute(path: home, builder: (context, state) => const HomeScreenPage()),
+    GoRoute(path: map, builder: (context, state) => const MapScreen()),
+    GoRoute(path: gas, builder: (context, state) => const GasDeliveryPage()),
+    GoRoute(path: profile, builder: (context, state) => const ProfilePage()),
   ],
 );

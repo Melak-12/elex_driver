@@ -1,5 +1,6 @@
 import 'package:elex_driver/core/constants/app_constants.dart';
 import 'package:elex_driver/core/constants/colors/colors.dart';
+import 'package:elex_driver/core/constants/text_styles.dart';
 import 'package:flutter/material.dart';
 
 class OrderHistoryPage extends StatefulWidget {
@@ -183,16 +184,12 @@ class _OrderHistoryPageState extends State<OrderHistoryPage> {
 
     return Scaffold(
       appBar: AppBar(
-        elevation: 0,
-        backgroundColor: Colors.white,
+    
+      surfaceTintColor: Colors.white,
         centerTitle: true,
         title: const Text(
           'Order History',
-          style: TextStyle(
-            color: AppColors.primary,
-            fontSize: 24,
-            fontWeight: FontWeight.bold,
-          ),
+          style:AppTextStyles.headline1,
         ),
        
         actions: [
