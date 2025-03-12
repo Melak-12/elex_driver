@@ -20,7 +20,7 @@ const String gas = '/gas';
 const String profile = '/profile';
 
 final GoRouter appRouter = GoRouter(
-  initialLocation: layout,
+  initialLocation: onBoarding,
   routes: [
     GoRoute(path: onBoarding, builder: (context, state) => const OnboardingScreen()),
     GoRoute(path: layout, builder: (context, state) => const MainLayout()),
