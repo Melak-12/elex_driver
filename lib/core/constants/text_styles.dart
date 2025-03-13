@@ -24,5 +24,12 @@ class AppTextStyles {
     fontSize: 15.0,
     fontWeight: FontWeight.w600,
     color: Colors.white,
+    fontFamily: AppAssets.complimentaryFont,
+  );
+  static const TextStyle bodyText2 = TextStyle(
+    color: Colors.black,
+    fontSize: 15,
+    fontWeight: FontWeight.w700,
+    fontFamily: AppAssets.complimentaryFont,
   );
 }

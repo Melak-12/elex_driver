@@ -1,4 +1,6 @@
 import 'package:elex_driver/core/constants/colors/colors.dart';
+import 'package:elex_driver/core/constants/dimentsions.dart';
+import 'package:elex_driver/core/constants/text_styles.dart';
 import 'package:elex_driver/routes/app_router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -46,7 +48,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         onPressed: _skip,
                         child: const Text(
                           "Skip",
-                          style: TextStyle(color: AppColors.primary, fontSize: 17,fontWeight: FontWeight.bold),
+                          style: TextStyle(
+                              color: AppColors.primary,
+                              fontSize: 17,
+                              fontWeight: FontWeight.bold),
                         ),
                       )
                     : const SizedBox(),
@@ -99,7 +104,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   ),
                   child: Text(
                     _currentPage == 2 ? "Get Started" : "Learn More",
-                    style: const TextStyle(fontSize: 18, color: Colors.white),
+                    style: AppTextStyles.buttonText,
                   ),
                 ),
               ),
@@ -115,24 +120,23 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       String imagePath, String title, String subTitle, String description) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      
       children: [
         Text(
           title,
-          style: const TextStyle(
-              fontSize: 24, fontWeight: FontWeight.bold, color: AppColors.primary),
+          style: AppTextStyles.headline1
+              .copyWith(color: AppColors.primary, fontSize: 21),
           textAlign: TextAlign.center,
         ),
         const SizedBox(height: 20),
-        Image.asset(imagePath, height: 300),
+        Image.asset(
+          imagePath,
+          height: 320,
+          width: screenWidth(context),
+        ),
         const SizedBox(height: 20),
         Text(
           subTitle,
-          style: const TextStyle(
-            color: AppColors.primary,
-            fontSize: 22,
-            fontWeight: FontWeight.bold,
-          ),
+          style: AppTextStyles.headline1.copyWith(fontSize: 21),
           textAlign: TextAlign.center,
         ),
         const SizedBox(height: 10),
@@ -140,11 +144,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Text(
             description,
-            style: const TextStyle(
-              color: Colors.black,
-              fontSize: 15,
-              fontWeight: FontWeight.w700,
-            ),
+            style: AppTextStyles.bodyText2,
             textAlign: TextAlign.center,
           ),
         ),

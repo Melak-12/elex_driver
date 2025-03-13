@@ -17,7 +17,6 @@ double screenHeight(context, {double h = 0.0}) => h > 0.0
     ? MediaQuery.of(context).size.height * h
     : MediaQuery.of(context).size.height;
 
-
 ///[ScreenWidth]
 
 double screenWidth(context, {double w = 0.0}) => w > 0.0
