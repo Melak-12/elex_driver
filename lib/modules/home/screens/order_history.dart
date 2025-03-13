@@ -4,7 +4,7 @@ import 'package:elex_driver/core/constants/text_styles.dart';
 import 'package:flutter/material.dart';
 
 class OrderHistoryPage extends StatefulWidget {
-  const OrderHistoryPage({Key? key}) : super(key: key);
+  const OrderHistoryPage({super.key});
 
   @override
   _OrderHistoryPageState createState() => _OrderHistoryPageState();

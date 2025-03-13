@@ -3,7 +3,7 @@ import 'package:elex_driver/core/constants/colors/colors.dart';
 import 'package:flutter/material.dart';
 
 class DriverOrdersPage extends StatefulWidget {
-  const DriverOrdersPage({Key? key}) : super(key: key);
+  const DriverOrdersPage({super.key});
 
   @override
   _DriverOrdersPageState createState() => _DriverOrdersPageState();

@@ -41,9 +41,9 @@ class MainLayout extends StatelessWidget {
           case 1:
             return const OrderHistoryPage();
           case 2:
-            return MapScreen();
+            return const MapScreen();
           case 3:
-            return  ProfilePage();
+            return  const ProfilePage();
           default:
             return Container();
         }
