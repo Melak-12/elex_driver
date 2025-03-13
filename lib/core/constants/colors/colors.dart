@@ -6,7 +6,7 @@ class AppColors {
   static const Color secondary = Color(0xFFf2c94c);
   static const Color onSecondary = Color(0xFF000000);
   static const Color black = Colors.black;
-  static const Color third = Colors.blueGrey;
+  static const Color tertiaryColor = Colors.blueGrey;
 
       static Color onSurfaceMid(BuildContext context) => Theme.of(context).colorScheme.onSurface.withOpacity(0.5);
       static Color onSurfaceLight(BuildContext context) => Theme.of(context).colorScheme.onSurface.withOpacity(0.1);

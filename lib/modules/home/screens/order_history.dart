@@ -190,6 +190,7 @@ class _OrderHistoryPageState extends State<OrderHistoryPage> {
         title: const Text(
           'Order History',
           style:AppTextStyles.headline1,
+          
         ),
        
         actions: [

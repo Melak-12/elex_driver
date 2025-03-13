@@ -131,6 +131,6 @@ flutter:
 flutter_icons:
   android: true
   ios: true
-  image_path: "assets/images/Logo mark.png"
+  image_path: "assets/images/logoo.png"
   adaptive_icon_foreground: "assets/images/Logo 2.png"
   adaptive_icon_background: "assets/images/Logo.png"
