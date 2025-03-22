@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 class SplashScreen extends StatefulWidget {
+  const SplashScreen({super.key});
+
   @override
   _SplashScreenState createState() => _SplashScreenState();
 }
@@ -76,7 +78,7 @@ class _SplashScreenState extends State<SplashScreen>
               borderRadius: BorderRadius.circular(
                   50), // Half of width and height to make it circular
               child: Image.asset(
-                'assets/images/Logo mark2.png',
+                'assets/images/logo3.png',
                 width: 100,
                 height: 100,
                 fit: BoxFit.cover,

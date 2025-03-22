@@ -25,7 +25,7 @@ final GoRouter appRouter = GoRouter(
   initialLocation: splash,
   routes: [
     GoRoute(path: onBoarding, builder: (context, state) => const OnboardingScreen()),
-    GoRoute(path: splash, builder: (context, state) =>  SplashScreen()),
+    GoRoute(path: splash, builder: (context, state) =>  const SplashScreen()),
     GoRoute(path: layout, builder: (context, state) => const MainLayout()),
     GoRoute(path: login, builder: (context, state) => const LoginPage()),
     GoRoute(path: signUp, builder: (context, state) => const SignupPage()),

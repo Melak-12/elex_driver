@@ -24,8 +24,15 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     }
   }
 
-  void _skip() {
-    _pageController.jumpToPage(2);
+  void _prevPage() {
+    if (_currentPage > 0) {
+      _pageController.previousPage(
+          duration: const Duration(milliseconds: 500), curve: Curves.ease);
+    }
+  }
+
+  void _finishOnboarding() {
+    context.go(login);
   }
 
   @override
@@ -45,7 +52,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 alignment: Alignment.topRight,
                 child: _currentPage < 2
                     ? TextButton(
-                        onPressed: _skip,
+                        onPressed: () => _pageController.jumpToPage(2),
                         child: const Text(
                           "Skip",
                           style: TextStyle(
@@ -87,27 +94,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 ),
               ),
               const SizedBox(height: 30),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: List.generate(3, (index) => _buildDot(index)),
-              ),
-              const SizedBox(height: 40),
-              SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  onPressed: _currentPage == 2 ? _finishOnboarding : _nextPage,
-                  style: ElevatedButton.styleFrom(
-                    padding: const EdgeInsets.symmetric(vertical: 15),
-                    backgroundColor: AppColors.primary2,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12)),
-                  ),
-                  child: Text(
-                    _currentPage == 2 ? "Get Started" : "Learn More",
-                    style: AppTextStyles.buttonText,
-                  ),
-                ),
-              ),
+              
+              // Navigation Buttons (Prev, Dots, Next)
+              _buildNavigationButtons(),
+
               const SizedBox(height: 40),
             ],
           ),
@@ -116,6 +106,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     );
   }
 
+  // Onboarding Page UI
   Widget _buildOnboardingPage(
       String imagePath, String title, String subTitle, String description) {
     return Column(
@@ -141,7 +132,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         ),
         const SizedBox(height: 10),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
+          padding: const EdgeInsets.symmetric(horizontal: 2),
           child: Text(
             description,
             style: AppTextStyles.bodyText2,
@@ -152,6 +143,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     );
   }
 
+  // Navigation Dots
   Widget _buildDot(int index) {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 5),
@@ -164,7 +156,57 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     );
   }
 
-  void _finishOnboarding() {
-    context.go(login);
+  // Navigation Buttons (Prev, Dots, Next/Get Started)
+  Widget _buildNavigationButtons() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        _currentPage > 0
+            ? GestureDetector(
+                onTap: _prevPage,
+                child: Container(
+                  padding: const EdgeInsets.all(12),
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: AppColors.primary2.withOpacity(0.2),
+                  ),
+                  child: const Icon(Icons.arrow_back, color: AppColors.primary2),
+                ),
+              )
+            : const SizedBox(width: 50), 
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: List.generate(3, (index) => _buildDot(index)),
+        ),
+
+        _currentPage == 2
+            ? ElevatedButton(
+                onPressed: _finishOnboarding,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppColors.primary2,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                ),
+                child:  Text(
+                  "Get Started",
+                  style: AppTextStyles.bodyText2.copyWith(color: Colors.white),
+                ),
+              )
+            : GestureDetector(
+                onTap: _nextPage,
+                child: Container(
+                  padding: const EdgeInsets.all(12),
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: AppColors.primary2.withOpacity(0.2),
+                  ),
+                  child: const Icon(Icons.arrow_forward, color: AppColors.primary2),
+                ),
+              ),
+      ],
+    );
   }
+
 }

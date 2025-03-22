@@ -80,28 +80,28 @@ flutter:
     # OpenSans font family
     - family: OpenSans
       fonts:
-        - asset: assets/fonts/Open_sans/static/OpenSans-Light.ttf
+        - asset: assets/fonts/Open_Sans/static/OpenSans-Light.ttf
           weight: 300
-        - asset: assets/fonts/Open_sans/static/OpenSans-Regular.ttf
+        - asset: assets/fonts/Open_Sans/static/OpenSans-Regular.ttf
           weight: 400
-        - asset: assets/fonts/Open_sans/static/OpenSans-SemiBold.ttf
+        - asset: assets/fonts/Open_Sans/static/OpenSans-SemiBold.ttf
           weight: 600
-        - asset: assets/fonts/Open_sans/static/OpenSans-Bold.ttf
+        - asset: assets/fonts/Open_Sans/static/OpenSans-Bold.ttf
           weight: 700
-        - asset: assets/fonts/Open_sans/static/OpenSans-ExtraBold.ttf
+        - asset: assets/fonts/Open_Sans/static/OpenSans-ExtraBold.ttf
           weight: 800
-        - asset: assets/fonts/Open_sans/static/OpenSans-Italic.ttf
+        - asset: assets/fonts/Open_Sans/static/OpenSans-Italic.ttf
           style: italic
-        - asset: assets/fonts/Open_sans/static/OpenSans-BoldItalic.ttf
+        - asset: assets/fonts/Open_Sans/static/OpenSans-BoldItalic.ttf
           weight: 700
           style: italic
-        - asset: assets/fonts/Open_sans/static/OpenSans-ExtraBoldItalic.ttf
+        - asset: assets/fonts/Open_Sans/static/OpenSans-ExtraBoldItalic.ttf
           weight: 800
           style: italic
-        - asset: assets/fonts/Open_sans/static/OpenSans-LightItalic.ttf
+        - asset: assets/fonts/Open_Sans/static/OpenSans-LightItalic.ttf
           weight: 300
           style: italic
-        - asset: assets/fonts/Open_sans/static/OpenSans-SemiBoldItalic.ttf
+        - asset: assets/fonts/Open_Sans/static/OpenSans-SemiBoldItalic.ttf
           weight: 600
           style: italic
 
