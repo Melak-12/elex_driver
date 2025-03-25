@@ -1,6 +1,6 @@
-import 'package:elex_driver/common/map_screen.dart';
 import 'package:elex_driver/layout/screens/main_layout.dart';
 import 'package:elex_driver/modules/gas/screens/gas_screen.dart';
+import 'package:elex_driver/modules/map/screens/map_screen.dart';
 import 'package:elex_driver/modules/profile/screens/profile.dart';
 import 'package:elex_driver/onboarding_screen.dart';
 import 'package:elex_driver/splash.dart';

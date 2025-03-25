@@ -1,8 +1,6 @@
-import 'package:elex_driver/common/map_screen.dart';
 import 'package:elex_driver/core/constants/dimentsions.dart';
-import 'package:elex_driver/modules/home/screens/deiver_orders_page.dart';
+import 'package:elex_driver/modules/orders/screens/orders.dart';
 import 'package:elex_driver/modules/home/screens/home_screen.dart';
-import 'package:elex_driver/modules/home/screens/order_history.dart';
 import 'package:elex_driver/modules/profile/screens/profile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -38,7 +36,7 @@ class MainLayout extends StatelessWidget {
           case 0:
             return const HomeScreenPage();
           case 1:
-            return const DeliveryOrdersPage();
+            return const OrdersPage();
 
           case 2:
             return const ProfilePage();

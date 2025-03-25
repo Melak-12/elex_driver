@@ -4,8 +4,8 @@ import 'package:elex_driver/core/constants/colors/colors.dart';
 import 'package:go_router/go_router.dart';
 import "package:live_indicator/live_indicator.dart";
 
-class DeliveryOrdersPage extends StatelessWidget {
-  const DeliveryOrdersPage({Key? key}) : super(key: key);
+class OrdersPage extends StatelessWidget {
+  const OrdersPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -43,18 +43,30 @@ class DeliveryOrdersPage extends StatelessWidget {
                     children: [
                       Row(
                         children: [
-                          Row(
+                          Stack(
                             children: [
-                              const Icon(Icons.location_on,
-                                  size: 40, color: AppColors.bodyColor),
-                              LiveIndicator(
-                                color: Colors.greenAccent.shade700,
-                                radius: 5.5,
-                                spreadRadius: 8,
-                                spreadDuration:
-                                    const Duration(microseconds: 100),
-                                waitDuration: const Duration(milliseconds: 500),
-                              )
+                              Container(
+                                padding: const EdgeInsets.all(8),
+                                decoration: BoxDecoration(
+                                  color: Colors.white.withOpacity(0.2),
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                child: const Icon(Icons.location_on,
+                                    size: 24, color: Colors.white),
+                              ),
+                              Positioned(
+                                top: 0,
+                                left: 18,
+                                child: LiveIndicator(
+                                  color: Colors.greenAccent.shade700,
+                                  radius: 5.5,
+                                  spreadRadius: 8,
+                                  spreadDuration:
+                                      const Duration(microseconds: 100),
+                                  waitDuration:
+                                      const Duration(milliseconds: 500),
+                                ),
+                              ),
                             ],
                           ),
                           const SizedBox(width: 8),
@@ -80,7 +92,7 @@ class DeliveryOrdersPage extends StatelessWidget {
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 16),
                     decoration: BoxDecoration(
-                      color: Colors.white,
+                      color: Colors.white.withOpacity(0.5),
                       borderRadius: BorderRadius.circular(13),
                     ),
                     child: const Row(
