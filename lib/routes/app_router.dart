@@ -22,10 +22,12 @@ const String gas = '/gas';
 const String profile = '/profile';
 
 final GoRouter appRouter = GoRouter(
-  initialLocation: layout,
+  initialLocation: splash,
   routes: [
-    GoRoute(path: onBoarding, builder: (context, state) => const OnboardingScreen()),
-    GoRoute(path: splash, builder: (context, state) =>  const SplashScreen()),
+    GoRoute(
+        path: onBoarding,
+        builder: (context, state) => const OnboardingScreen()),
+    GoRoute(path: splash, builder: (context, state) => const SplashScreen()),
     GoRoute(path: layout, builder: (context, state) => const MainLayout()),
     GoRoute(path: login, builder: (context, state) => const LoginPage()),
     GoRoute(path: signUp, builder: (context, state) => const SignupPage()),
