@@ -1,153 +1,268 @@
-import 'package:elex_driver/common/map_screen.dart';
-import 'package:elex_driver/core/constants/app_constants.dart';
-import 'package:elex_driver/core/constants/assets.dart';
 import 'package:elex_driver/core/constants/colors/colors.dart';
-import 'package:elex_driver/modules/home/screens/deiver_orders_page.dart';
-
+import 'package:elex_driver/core/constants/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/cupertino.dart';
 import "package:live_indicator/live_indicator.dart";
 
-class HomeScreenPage extends StatefulWidget {
-  const HomeScreenPage({super.key});
-
-  @override
-  _HomeScreenPageState createState() => _HomeScreenPageState();
-}
-
-class _HomeScreenPageState extends State<HomeScreenPage> {
-  int _selectedTab = 0;
+class HomeScreenPage extends StatelessWidget {
+  const HomeScreenPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return AnnotatedRegion<SystemUiOverlayStyle>(
-      value: SystemUiOverlayStyle(
-          statusBarColor: Colors.black.withOpacity(0.2),
-          statusBarIconBrightness: Brightness.dark),
+      value: const SystemUiOverlayStyle(
+        statusBarColor: AppColors.primary,
+        statusBarIconBrightness: Brightness.light,
+      ),
       child: Scaffold(
+        backgroundColor: AppColors.bodyColor,
         appBar: AppBar(
-          surfaceTintColor: Colors.white,
-          elevation: 0,
-          title: Row(
+          leading: Image.asset(
+            'assets/images/Logo.png',
+            width: 20,
+            height: 20,
+            fit: BoxFit.contain,
+          ),
+          backgroundColor: AppColors.appBarColor,
+          title: const Text(
+            'Home',
+            style: AppTextStyles.headline2,
+          ),
+          centerTitle: true,
+        ),
+        body: SafeArea(
+          child: Column(
             children: [
-              Image.asset(AppAssets.logo, height: 30),
-              const SizedBox(width: 8),
+              Container(
+                padding: const EdgeInsets.all(16),
+                decoration: const BoxDecoration(
+                  color: Color(0xFF663399),
+                  borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(10),
+                    bottomRight: Radius.circular(10),
+                  ),
+                ),
+                child: Column(
+                  children: [
+                    Row(
+                      children: [
+                        Row(
+                          children: [
+                            Row(
+                              children: [
+                                const Icon(Icons.location_on,
+                                    size: 40, color: AppColors.bodyColor),
+                                LiveIndicator(
+                                  color: Colors.greenAccent.shade700,
+                                  radius: 5.5,
+                                  spreadRadius: 8,
+                                  spreadDuration:
+                                      const Duration(microseconds: 100),
+                                  waitDuration:
+                                      const Duration(milliseconds: 500),
+                                )
+                              ],
+                            ),
+                            const SizedBox(width: 8),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: const [
+                                Text(
+                                  'Arada, Addis Ababa',
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                        const Spacer(),
+                        const Text(
+                          '2:00:34',
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 16),
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(13),
+                      ),
+                      child: const Row(
+                        children: const [
+                          Expanded(
+                            child: TextField(
+                              decoration: InputDecoration(
+                                hintText: 'Search Pending Orders',
+                                border: InputBorder.none,
+                              ),
+                            ),
+                          ),
+                          Icon(Icons.search),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: ElevatedButton.icon(
+                        onPressed: () {},
+                        icon: const Icon(
+                          Icons.location_on,
+                          size: 30,
+                          color: Colors.white,
+                        ),
+                        label: const Text(
+                          'Map',
+                          style: AppTextStyles.buttonText,
+                        ),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: AppColors.primary2,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 30),
+              Container(
+                margin: const EdgeInsets.symmetric(horizontal: 16),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(12),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.2),
+                      spreadRadius: 2,
+                      blurRadius: 5,
+                    ),
+                  ],
+                ),
+                child: Column(
+                  children: [
+                    ListTile(
+                      leading: const Icon(Icons.gas_meter_outlined),
+                      title: Container(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 4, horizontal: 0),
+                        decoration: BoxDecoration(
+                          // color: Colors.grey[200],
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: const Text(
+                          'ORD-123',
+                          style: AppTextStyles.headline3,
+                        ),
+                      ),
+                      subtitle: const Text(
+                        "Cylinder Delivery",
+                        style: TextStyle(color: AppColors.primary),
+                      ),
+                      trailing: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 12, vertical: 4),
+                            decoration: BoxDecoration(
+                              border: Border.all(color: Colors.amber[900]!),
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: Text(
+                              'Pending',
+                              style: TextStyle(
+                                color: Colors.amber[900],
+                              ),
+                            ),
+                          ),
+                          SizedBox(height: 10),
+                          const Text("34:00 am")
+                        ],
+                      ),
+                    ),
+                    Container(
+                      decoration: BoxDecoration(
+                        color: AppColors.primary,
+                        borderRadius: const BorderRadius.only(
+                          bottomLeft: Radius.circular(12),
+                          bottomRight: Radius.circular(12),
+                        ),
+                      ),
+                      child: Column(
+                        children: [
+                          _buildListRow(
+                              Icons.account_circle_rounded, "Selecom Hailu"),
+                          _buildListRow(Icons.location_on, "From",
+                              "Alem Bank, Addis Ababa"),
+                          _buildListRow(
+                              Icons.location_on, "To", "Merkato, Addis Ababa"),
+                          _buildListRow(
+                              Icons.phone, "Phone", "+251-945-3453-32"),
+                          _buildListRow(Icons.timer, "Time", "2:58 pm"),
+                          _buildListRow(Icons.timer, "Distance", "23KM"),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             ],
           ),
-          actions: [
-            _buildIconWithBadge(Icons.notifications, '2', () {}),
-            _buildIconWithBadge(Icons.shopping_cart, '2', () {}),
-          ],
-        ),
-        body: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _buildStatusRow(),
-            const SizedBox(height: 10),
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                  horizontal: AppConstant.horizontalPadding),
-              child: _buildTabs(),
-            ),
-            const SizedBox(height: 10),
-            Expanded(
-                child: _selectedTab == 0
-                    ? const DriverOrdersPage()
-                    : const MapScreen()),
-          ],
         ),
       ),
     );
   }
 
-  Widget _buildTabs() {
-    return Row(
-      children: [
-        _buildTabButton("Deliveries", 0),
-        const SizedBox(width: 8),
-        _buildTabButton("Map View", 1),
-      ],
-    );
-  }
-
-  Widget _buildTabButton(String title, int index) {
-    bool isSelected = _selectedTab == index;
-    return Expanded(
-      child: GestureDetector(
-        onTap: () {
-          setState(() {
-            _selectedTab = index;
-          });
-          // context.go(index == 0 ? '/map' : '/map');
-        },
-        child: Container(
-          height: 40,
-          alignment: Alignment.center,
-          decoration: BoxDecoration(
-            color: isSelected ? AppColors.primary : Colors.white,
-            borderRadius: BorderRadius.circular(8),
-            border: Border.all(color: AppColors.primary),
-          ),
-          child: Text(
-            title,
-            style: TextStyle(
-              color: isSelected ? Colors.white : AppColors.primary,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildStatusRow() {
+  Widget _buildListRow(IconData icon, String title, [String? subtitle]) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
+      padding: EdgeInsets.only(
+        left: 16,
+        right: 16,
+        top: subtitle == null
+            ? 18
+            : 10, // Large gap for first item, small for others
+        bottom: 4,
+      ),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Row(
-            children: [
-              const Icon(CupertinoIcons.flag_fill, color: AppColors.primary),
-              LiveIndicator(
-                color: Colors.greenAccent.shade700,
-                radius: 5.5,
-                spreadRadius: 8,
-                spreadDuration: const Duration(microseconds: 100),
-                waitDuration: const Duration(milliseconds: 500),
-              )
-            ],
+          Icon(
+            icon,
+            color: AppColors.primary2,
+            size: 20,
           ),
-          const Text(
-            "Today: 7 Deliveries • 1500birr",
-            style: TextStyle(
-                fontSize: 15,
-                fontWeight: FontWeight.bold,
-                color: AppColors.primary),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  style: const TextStyle(
+                      color: AppColors.primary2,
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold),
+                ),
+                if (subtitle != null)
+                  Padding(
+                    padding: const EdgeInsets.only(top: 2), // Reduce spacing
+                    child: Text(
+                      subtitle,
+                      style: const TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16),
+                    ),
+                  ),
+              ],
+            ),
           ),
         ],
       ),
-    );
-  }
-
-  Widget _buildIconWithBadge(IconData icon, String count, VoidCallback onTap) {
-    return Stack(
-      children: [
-        IconButton(
-            icon: Icon(icon, color: AppColors.primary.withValues(green: 2.3)), onPressed: onTap),
-        Positioned(
-          right: 7,
-          top: 5,
-          child: Container(
-            padding: const EdgeInsets.all(4),
-            decoration:
-                const BoxDecoration(color: Colors.red, shape: BoxShape.circle),
-            child: Text(count,
-                style: const TextStyle(fontSize: 12, color: Colors.white)),
-          ),
-        ),
-      ],
     );
   }
 }

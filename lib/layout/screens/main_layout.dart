@@ -1,5 +1,6 @@
 import 'package:elex_driver/common/map_screen.dart';
 import 'package:elex_driver/core/constants/dimentsions.dart';
+import 'package:elex_driver/modules/home/screens/deiver_orders_page.dart';
 import 'package:elex_driver/modules/home/screens/home_screen.dart';
 import 'package:elex_driver/modules/home/screens/order_history.dart';
 import 'package:elex_driver/modules/profile/screens/profile.dart';
@@ -13,37 +14,34 @@ class MainLayout extends StatelessWidget {
   Widget build(BuildContext context) {
     return CupertinoTabScaffold(
       tabBar: CupertinoTabBar(
-        height:screenHeight(context,h: 0.06),border:const Border(bottom: BorderSide(color: Colors.grey, width: 0.5)),
-      iconSize: 20,  items: const [
-        BottomNavigationBarItem(
-            icon: Icon(CupertinoIcons.home),
-          label: 'Home',
-        ),
-        BottomNavigationBarItem(icon: 
-        Icon(Icons.shopping_cart),
-          label: 'Orders',
-        ),
-      
-        
-        BottomNavigationBarItem(
-          icon: Icon(CupertinoIcons.location_solid),
-          label: 'Map view',
-        ),
-         BottomNavigationBarItem(
-          icon: Icon(Icons.account_circle),
-          label: 'Users',
-        ),
-      ]),
+          height: screenHeight(context, h: 0.06),
+          border:
+              const Border(bottom: BorderSide(color: Colors.grey, width: 0.5)),
+          iconSize: 30,
+          items: const [
+            BottomNavigationBarItem(
+              icon: Icon(CupertinoIcons.home),
+              label: 'Home',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.delivery_dining_sharp),
+              label: 'Delivered',
+            ),
+           
+            BottomNavigationBarItem(
+              icon: Icon(Icons.account_circle),
+              label: 'Users',
+            ),
+          ]),
       tabBuilder: (_, index) {
         switch (index) {
           case 0:
             return const HomeScreenPage();
           case 1:
-            return const OrderHistoryPage();
+            return const DeliveryOrdersPage();
+
           case 2:
-            return const MapScreen();
-          case 3:
-            return  const ProfilePage();
+            return const ProfilePage();
           default:
             return Container();
         }

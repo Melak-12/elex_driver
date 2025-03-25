@@ -10,9 +10,15 @@ class AppTextStyles {
     fontFamily: AppAssets.primaryFont,
   );
   static const TextStyle headline2 = TextStyle(
-    fontSize: 18.0,
+    fontSize: 17.0,
     fontWeight: FontWeight.bold,
     color: AppColors.primary,
+    fontFamily: AppAssets.secondaryFont,
+  );
+  static const TextStyle headline3 = TextStyle(
+    fontSize: 17.0,
+    fontWeight: FontWeight.bold,
+    color: AppColors.primary2,
     fontFamily: AppAssets.secondaryFont,
   );
   static const TextStyle bodyText1 = TextStyle(
