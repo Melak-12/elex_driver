@@ -52,7 +52,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 alignment: Alignment.topRight,
                 child: _currentPage < 2
                     ? TextButton(
-                        onPressed: () => _pageController.jumpToPage(2),
+                        onPressed: () => context.go('/login'),
                         child: const Text(
                           "Skip",
                           style: TextStyle(
@@ -94,7 +94,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 ),
               ),
               const SizedBox(height: 30),
-              
+
               // Navigation Buttons (Prev, Dots, Next)
               _buildNavigationButtons(),
 
@@ -170,15 +170,15 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     shape: BoxShape.circle,
                     color: AppColors.primary2.withOpacity(0.2),
                   ),
-                  child: const Icon(Icons.arrow_back, color: AppColors.primary2),
+                  child:
+                      const Icon(Icons.arrow_back, color: AppColors.primary2),
                 ),
               )
-            : const SizedBox(width: 50), 
+            : const SizedBox(width: 50),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: List.generate(3, (index) => _buildDot(index)),
         ),
-
         _currentPage == 2
             ? ElevatedButton(
                 onPressed: _finishOnboarding,
@@ -187,9 +187,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30),
                   ),
-                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
                 ),
-                child:  Text(
+                child: Text(
                   "Get Started",
                   style: AppTextStyles.bodyText2.copyWith(color: Colors.white),
                 ),
@@ -202,11 +203,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     shape: BoxShape.circle,
                     color: AppColors.primary2.withOpacity(0.2),
                   ),
-                  child: const Icon(Icons.arrow_forward, color: AppColors.primary2),
+                  child: const Icon(Icons.arrow_forward,
+                      color: AppColors.primary2),
                 ),
               ),
       ],
     );
   }
-
 }

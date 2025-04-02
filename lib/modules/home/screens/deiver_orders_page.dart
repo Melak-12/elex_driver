@@ -12,11 +12,14 @@ class DeliveryOrdersPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppColors.bodyColor,
       appBar: AppBar(
-        leading: Image.asset(
-          'assets/images/Logo.png',
-          width: 20,
-          height: 20,
-          fit: BoxFit.contain,
+        leading: Padding(
+          padding: const EdgeInsets.only(left: 8.0),
+          child: Image.asset(
+            'assets/images/Logo.png',
+            width: 20,
+            height: 20,
+            fit: BoxFit.contain,
+          ),
         ),
         backgroundColor: AppColors.appBarColor,
         title: const Text(

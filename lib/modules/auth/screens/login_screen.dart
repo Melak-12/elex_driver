@@ -6,13 +6,20 @@ import 'package:elex_driver/core/constants/app_constants.dart';
 import 'package:elex_driver/core/constants/colors/colors.dart';
 import 'package:elex_driver/core/errors/error_dialog.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final TextEditingController phoneEmailController = TextEditingController();
+  State<LoginPage> createState() => _LoginPageState();
+}
 
+class _LoginPageState extends State<LoginPage> {
+  final TextEditingController _passwordController = TextEditingController();
+  bool _obscurePassword = true;
+  final TextEditingController phoneEmailController = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -60,6 +67,50 @@ class LoginPage extends StatelessWidget {
                   autovalidateMode: AutovalidateMode.disabled,
                   initialCountryCode: 'ET'),
               const SizedBox(height: 15),
+              TextFormField(
+                controller: _passwordController,
+                obscureText: _obscurePassword,
+                decoration: InputDecoration(
+                  labelText: 'Password',
+                  filled: true,
+                  fillColor: Colors.grey[100],
+                  counter: const Offstage(),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(30),
+                    borderSide: BorderSide.none,
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    borderSide: const BorderSide(
+                      color: AppColors.primary,
+                      width: 1,
+                    ),
+                  ),
+                  prefixIcon: const Icon(
+                    Icons.lock,
+                    color: AppColors.primary,
+                  ),
+                  suffixIcon: IconButton(
+                    icon: Icon(
+                      _obscurePassword
+                          ? Icons.visibility
+                          : Icons.visibility_off,
+                      color: AppColors.primary,
+                    ),
+                    onPressed: () => setState(
+                        () => _obscurePassword = !_obscurePassword),
+                  ),
+                ),
+                validator: (value) {
+                  if (value?.isEmpty ?? true) {
+                    return 'Please enter a password';
+                  }
+                  if ((value?.length ?? 0) < 8) {
+                    return 'Password must be at least 8 characters';
+                  }
+                  return null;
+                },
+              ),
 
               const SizedBox(height: 20),
               const Padding(
@@ -127,7 +178,7 @@ class LoginPage extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Text("Don’t have an account? ",
+                  const Text("Don't have an account? ",
                       style: TextStyle(
                           color: AppColors.black,
                           fontSize: 16,
