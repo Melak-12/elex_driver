@@ -16,18 +16,15 @@ class ProfilePage extends StatelessWidget {
       child: Scaffold(
         backgroundColor: AppColors.bodyColor,
         appBar: AppBar(
-          leading: IconButton(
-            icon: const Icon(Icons.arrow_back_ios),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-          ),
+          
           backgroundColor: AppColors.appBarColor,
           title: const Text(
             'Profile',
             style: AppTextStyles.headline2,
           ),
           centerTitle: true,
+          
+          
         ),
         body: SafeArea(
           child: Column(

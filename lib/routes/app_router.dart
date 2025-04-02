@@ -1,6 +1,6 @@
-import 'package:elex_driver/common/map_screen.dart';
 import 'package:elex_driver/layout/screens/main_layout.dart';
 import 'package:elex_driver/modules/gas/screens/gas_screen.dart';
+import 'package:elex_driver/modules/map/screens/map_screen.dart';
 import 'package:elex_driver/modules/profile/screens/profile.dart';
 import 'package:elex_driver/onboarding_screen.dart';
 import 'package:elex_driver/splash.dart';
@@ -24,8 +24,10 @@ const String profile = '/profile';
 final GoRouter appRouter = GoRouter(
   initialLocation: splash,
   routes: [
-    GoRoute(path: onBoarding, builder: (context, state) => const OnboardingScreen()),
-    GoRoute(path: splash, builder: (context, state) =>  const SplashScreen()),
+    GoRoute(
+        path: onBoarding,
+        builder: (context, state) => const OnboardingScreen()),
+    GoRoute(path: splash, builder: (context, state) => const SplashScreen()),
     GoRoute(path: layout, builder: (context, state) => const MainLayout()),
     GoRoute(path: login, builder: (context, state) => const LoginPage()),
     GoRoute(path: signUp, builder: (context, state) => const SignupPage()),
