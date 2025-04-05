@@ -7,10 +7,10 @@ class SlideToCompleteButton extends StatefulWidget {
   final String text;
 
   const SlideToCompleteButton({
-    Key? key,
+    super.key,
     required this.onCompleted,
     required this.text,
-  }) : super(key: key);
+  });
 
   @override
   State<SlideToCompleteButton> createState() => _SlideToCompleteButtonState();
@@ -19,7 +19,7 @@ class SlideToCompleteButton extends StatefulWidget {
 class _SlideToCompleteButtonState extends State<SlideToCompleteButton>
     with SingleTickerProviderStateMixin {
   double _dragPercentage = 0.0;
-  double _dragThreshold = 0.9;
+  final double _dragThreshold = 0.9;
   late AnimationController _animationController;
   bool _isDragging = false;
 

@@ -1,0 +1,38 @@
+[
+  {
+    "id": "order-001",
+    "customerName": "Abel Tesfaye",
+    "pickupLocation": "Arada, Addis Ababa",
+    "dropoffLocation": "Bole, Addis Ababa",
+    "amount": 150.00,
+    "status": "pending",
+    "createdAt": "2024-04-04T10:30:00Z",
+    "customerPhone": "+251912345678",
+    "customerImage": "https://ui-avatars.com/api/?name=Abel+Tesfaye&background=663399&color=fff",
+    "orderNote": "Please call when arriving"
+  },
+  {
+    "id": "order-002",
+    "customerName": "Selam Haile",
+    "pickupLocation": "Merkato, Addis Ababa",
+    "dropoffLocation": "Sarbet, Addis Ababa",
+    "amount": 200.00,
+    "status": "pending",
+    "createdAt": "2024-04-04T10:35:00Z",
+    "customerPhone": "+251923456789",
+    "customerImage": "https://ui-avatars.com/api/?name=Selam+Haile&background=663399&color=fff",
+    "orderNote": null
+  },
+  {
+    "id": "order-003",
+    "customerName": "Dawit Mekonnen",
+    "pickupLocation": "Piassa, Addis Ababa",
+    "dropoffLocation": "Kazanchis, Addis Ababa",
+    "amount": 120.00,
+    "status": "pending",
+    "createdAt": "2024-04-04T10:40:00Z",
+    "customerPhone": "+251934567890",
+    "customerImage": "https://ui-avatars.com/api/?name=Dawit+Mekonnen&background=663399&color=fff",
+    "orderNote": "Fragile items inside"
+  }
+] 

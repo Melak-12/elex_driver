@@ -1,0 +1,26 @@
+{
+  "success": true,
+  "data": {
+    "id": 1,
+    "name": "John Doee",
+    "email": "john.doe@example.com",
+    "phone": "+251912345678",
+    "profileImage": "assets/images/profile.png",
+    "licenseNumber": "ET123456",
+    "vehicleType": "Motorcycle",
+    "vehicleNumber": "AA1234",
+    "isOnline": true,
+    "rating": 4.8,
+    "totalDeliveries": 150,
+    "completedDeliveries": 145,
+    "pendingDeliveries": 5,
+    "status": "Active",
+    "lastActive": "2024-04-04T10:30:00Z",
+    "notificationSettings": {
+      "newOrders": true,
+      "orderUpdates": true,
+      "promotions": false,
+      "systemAlerts": true
+    }
+  }
+} 

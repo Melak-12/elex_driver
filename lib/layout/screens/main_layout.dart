@@ -1,7 +1,7 @@
 import 'package:elex_driver/core/constants/dimentsions.dart';
-import 'package:elex_driver/modules/orders/screens/orders.dart';
+import 'package:elex_driver/modules/orders/screens/orders_screen.dart';
 import 'package:elex_driver/modules/home/screens/home_screen.dart';
-import 'package:elex_driver/modules/profile/screens/profile.dart';
+import 'package:elex_driver/modules/profile/screens/profile_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -34,12 +34,12 @@ class MainLayout extends StatelessWidget {
       tabBuilder: (_, index) {
         switch (index) {
           case 0:
-            return const HomeScreenPage();
+            return const HomePage();
           case 1:
             return const OrdersPage();
 
           case 2:
-            return const ProfilePage();
+            return  ProfilePage();
           default:
             return Container();
         }

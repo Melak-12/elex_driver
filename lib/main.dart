@@ -1,4 +1,6 @@
-import 'package:elex_driver/modules/profile/providers/profileProvider.dart';
+import 'package:elex_driver/modules/home/providers/home_provider.dart';
+import 'package:elex_driver/modules/orders/providers/order_provider.dart';
+import 'package:elex_driver/modules/profile/providers/profile_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:elex_driver/modules/auth/providers/auth_provider.dart';
@@ -26,6 +28,8 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => VerifyProvider()),
         ChangeNotifierProvider(create: (_) => SignupProvider()),
         ChangeNotifierProvider(create: (_) => ProfileProvider()),
+        ChangeNotifierProvider(create: (_) => OrderProvider()),
+        ChangeNotifierProvider(create: (_) => HomeProvider()),
       ],
       child: MaterialApp.router(
         debugShowCheckedModeBanner: false,

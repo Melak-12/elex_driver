@@ -137,12 +137,12 @@ class _MapScreenState extends State<MapScreen> {
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(16),
                           ),
-                          child: Row(
+                          child: const Row(
                             children: [
-                              const Icon(Icons.timer,
+                              Icon(Icons.timer,
                                   size: 16, color: Color(0xFF663399)),
-                              const SizedBox(width: 4),
-                              const Text(
+                              SizedBox(width: 4),
+                              Text(
                                 '2:00:34',
                                 style: TextStyle(
                                   color: Color(0xFF663399),

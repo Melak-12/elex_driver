@@ -1,0 +1,185 @@
+{
+  "locations": [
+    {
+      "id": "loc-001",
+      "name": "Elex Depot",
+      "address": "Bole, Addis Ababa",
+      "latitude": 8.9778,
+      "longitude": 38.7989,
+      "icon": "depot",
+      "type": "depot",
+      "isDeliveryPoint": false
+    },
+    {
+      "id": "loc-002",
+      "name": "Meskel Square",
+      "address": "Kirkos, Addis Ababa",
+      "latitude": 8.9806,
+      "longitude": 38.7578,
+      "icon": "destination",
+      "type": "destination",
+      "isDeliveryPoint": true
+    },
+    {
+      "id": "loc-003",
+      "name": "Piazza",
+      "address": "Arada, Addis Ababa",
+      "latitude": 9.0356,
+      "longitude": 38.7497,
+      "icon": "origin",
+      "type": "origin",
+      "isDeliveryPoint": false
+    },
+    {
+      "id": "loc-004",
+      "name": "Merkato",
+      "address": "Addis Ketema, Addis Ababa",
+      "latitude": 9.0365,
+      "longitude": 38.7413,
+      "icon": "destination",
+      "type": "destination",
+      "isDeliveryPoint": true
+    },
+    {
+      "id": "loc-005",
+      "name": "Arat Kilo",
+      "address": "Arada, Addis Ababa",
+      "latitude": 9.0340,
+      "longitude": 38.7636,
+      "icon": "waypoint",
+      "type": "waypoint",
+      "isDeliveryPoint": true
+    },
+    {
+      "id": "loc-006",
+      "name": "Sarbet",
+      "address": "Nifas Silk-Lafto, Addis Ababa",
+      "latitude": 8.9912,
+      "longitude": 38.7326,
+      "icon": "waypoint",
+      "type": "waypoint",
+      "isDeliveryPoint": true
+    },
+    {
+      "id": "loc-007",
+      "name": "Jemo",
+      "address": "Nifas Silk-Lafto, Addis Ababa",
+      "latitude": 8.9516,
+      "longitude": 38.7155,
+      "icon": "destination",
+      "type": "destination",
+      "isDeliveryPoint": true
+    }
+  ],
+  "routes": [
+    {
+      "id": "route-001",
+      "origin": {
+        "id": "loc-001",
+        "name": "Elex Depot",
+        "address": "Bole, Addis Ababa",
+        "latitude": 8.9778,
+        "longitude": 38.7989,
+        "icon": "depot",
+        "type": "depot",
+        "isDeliveryPoint": false
+      },
+      "destination": {
+        "id": "loc-002",
+        "name": "Meskel Square",
+        "address": "Kirkos, Addis Ababa",
+        "latitude": 8.9806,
+        "longitude": 38.7578,
+        "icon": "destination",
+        "type": "destination",
+        "isDeliveryPoint": true
+      },
+      "waypoints": [],
+      "distance": 10.2,
+      "estimatedTime": "25 mins",
+      "status": "active",
+      "customerName": "Abebe Kebede",
+      "customerPhone": "+251912345678"
+    },
+    {
+      "id": "route-002",
+      "origin": {
+        "id": "loc-003",
+        "name": "Piazza",
+        "address": "Arada, Addis Ababa",
+        "latitude": 9.0356,
+        "longitude": 38.7497,
+        "icon": "origin",
+        "type": "origin",
+        "isDeliveryPoint": false
+      },
+      "destination": {
+        "id": "loc-004",
+        "name": "Merkato",
+        "address": "Addis Ketema, Addis Ababa",
+        "latitude": 9.0365,
+        "longitude": 38.7413,
+        "icon": "destination",
+        "type": "destination",
+        "isDeliveryPoint": true
+      },
+      "waypoints": [
+        {
+          "id": "loc-005",
+          "name": "Arat Kilo",
+          "address": "Arada, Addis Ababa",
+          "latitude": 9.0340,
+          "longitude": 38.7636,
+          "icon": "waypoint",
+          "type": "waypoint",
+          "isDeliveryPoint": true
+        }
+      ],
+      "distance": 5.7,
+      "estimatedTime": "15 mins",
+      "status": "pending",
+      "customerName": "Tigist Haile",
+      "customerPhone": "+251923456789"
+    },
+    {
+      "id": "route-003",
+      "origin": {
+        "id": "loc-001",
+        "name": "Elex Depot",
+        "address": "Bole, Addis Ababa",
+        "latitude": 8.9778,
+        "longitude": 38.7989,
+        "icon": "depot",
+        "type": "depot",
+        "isDeliveryPoint": false
+      },
+      "destination": {
+        "id": "loc-007",
+        "name": "Jemo",
+        "address": "Nifas Silk-Lafto, Addis Ababa",
+        "latitude": 8.9516,
+        "longitude": 38.7155,
+        "icon": "destination",
+        "type": "destination",
+        "isDeliveryPoint": true
+      },
+      "waypoints": [
+        {
+          "id": "loc-006",
+          "name": "Sarbet",
+          "address": "Nifas Silk-Lafto, Addis Ababa",
+          "latitude": 8.9912,
+          "longitude": 38.7326,
+          "icon": "waypoint",
+          "type": "waypoint",
+          "isDeliveryPoint": true
+        }
+      ],
+      "distance": 12.4,
+      "estimatedTime": "30 mins",
+      "status": "pending",
+      "customerName": "Solomon Gebre",
+      "customerPhone": "+251934567890"
+    }
+  ]
+} 

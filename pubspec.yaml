@@ -40,6 +40,10 @@ flutter:
 
   assets:
     - assets/images/
+    - assets/jsons/profile.json
+    - assets/jsons/orders.json
+    - assets/jsons/orders_incoming.json
+    - assets/jsons/map_data.json
 
   fonts:
     - family: Montserrat
