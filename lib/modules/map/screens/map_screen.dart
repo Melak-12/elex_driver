@@ -8,7 +8,6 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:mapbox_maps_flutter/mapbox_maps_flutter.dart';
 
-
 class MapScreen extends StatefulWidget {
   const MapScreen({super.key});
 
@@ -68,7 +67,7 @@ class _MapScreenState extends State<MapScreen> {
                   onMapCreated: mapProvider?.onMapCreated,
                   cameraOptions: CameraOptions(
                     center: Point(coordinates: Position(midLng, midLat)),
-                    zoom: 11.0,
+                    zoom: 13.0,
                   ),
                 );
               },

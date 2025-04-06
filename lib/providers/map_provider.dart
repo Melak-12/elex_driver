@@ -113,18 +113,10 @@ class MapProvider with ChangeNotifier {
   }
 
   void setActiveRoute(String routeId) {
-    try {
-      _activeRoute = _routes.firstWhere((route) => route.id == routeId);
-      _addMarkers();
-      _drawRoute();
-    } catch (e) {
-      // If the route is not found, use the first route if available
-      if (_routes.isNotEmpty) {
-        _activeRoute = _routes.first;
-        _addMarkers();
-        _drawRoute();
-      }
-    }
+    _activeRoute = _routes.firstWhere(
+      (route) => route.id == routeId,
+      orElse: () => _routes.first,
+    );
     notifyListeners();
   }
 
@@ -165,10 +157,7 @@ class MapProvider with ChangeNotifier {
       return _routes.firstWhere((route) => route.id == id);
     } catch (e) {
       print('Route not found with id: $id');
-      // Create a default route to return if none is found
-      if (_routes.isNotEmpty) {
-        return _routes.first;
-      }
+      // Return null if no route is found
       return null;
     }
   }
@@ -252,7 +241,6 @@ class MapProvider with ChangeNotifier {
   Future<void> initMapBox() async {
     try {
       MapboxOptions.setAccessToken(mapboxToken);
-      notifyListeners();
     } catch (e) {
       print('Error initializing MapBox: $e');
       rethrow;
@@ -261,9 +249,22 @@ class MapProvider with ChangeNotifier {
 
   void onMapCreated(MapboxMap mapboxMap) {
     _mapboxMap = mapboxMap;
-    _addMarkers();
-    _drawRoute();
     notifyListeners();
+    // Initialize map features after map is created
+    _initializeMapFeatures();
+  }
+
+  Future<void> _initializeMapFeatures() async {
+    if (_mapboxMap == null) return;
+
+    try {
+      await _addMarkers();
+      await _drawRoute();
+      await showUserLocation();
+      notifyListeners();
+    } catch (e) {
+      print('Error initializing map features: $e');
+    }
   }
 
   /// [UpdateMethodToUpdateThePoints]
@@ -276,15 +277,15 @@ class MapProvider with ChangeNotifier {
   }
 
   /// [MethodToGetTheUserLocation] method to get the user location
+  Future<void> showUserLocation() async {
+    if (_mapboxMap == null) return;
 
-  Future<void> _showUserLocation() async {
-    if (await Permission.locationWhenInUse.request().isGranted &&
-        mapboxMap != null) {
-        final ByteData bytes =
+    if (await Permission.locationWhenInUse.request().isGranted) {
+      final ByteData bytes =
           await rootBundle.load('assets/images/location.png');
       final Uint8List list = bytes.buffer.asUint8List();
-          
-      mapboxMap!.location.updateSettings(LocationComponentSettings(
+
+      await _mapboxMap!.location.updateSettings(LocationComponentSettings(
         enabled: true,
         pulsingEnabled: true,
         showAccuracyRing: true,
@@ -292,17 +293,9 @@ class MapProvider with ChangeNotifier {
         pulsingColor: Colors.blue.value,
         locationPuck: LocationPuck(
             locationPuck2D: LocationPuck2D(
-                topImage: list,
-                )),
+          topImage: list,
+        )),
       ));
-
-      //! Get the camera state
-      final cameraState = await mapboxMap!.getCameraState();
-
-      // currentPoint = Point(
-      //     coordinates: Position(cameraState.center.coordinates.lng,
-      //         cameraState.center.coordinates.lat));
-      //Todo get the current location of the user coordinate points
 
       // Fetch current location
       LocationData currentLocation = await location.getLocation();
@@ -312,18 +305,11 @@ class MapProvider with ChangeNotifier {
           currentLocation.latitude!,
         ),
       );
-      // Optionally, update the map's camera position
-      // mapboxMap?.moveCamera(CameraUpdate.newLatLng(
-      //   LatLng(currentLocation.latitude!, currentLocation.longitude!),
-      // ));
-      print(
-          'Camera position:.................... ${_currentPoint!.coordinates.lat + pickupPoint.coordinates.lat}');
     }
   }
 
   /// [MethodToAddPointsAndRoute]
-
-  Future<void> _addPointsAndRoute() async {
+  Future<void> addPointsAndRoute() async {
     if (mapboxMap == null) return;
     pointAnnotationManager =
         await mapboxMap!.annotations.createPointAnnotationManager();
@@ -337,7 +323,7 @@ class MapProvider with ChangeNotifier {
         geometry: destinationPoint, image: imageData, iconSize: 1.0));
     if (_currentPoint != null) {
       pointAnnotationManager?.create(PointAnnotationOptions(
-        geometry: _currentPoint!, image: imageData, iconSize: 1.0));
+          geometry: _currentPoint!, image: imageData, iconSize: 1.0));
     }
 
     final response = await http.get(Uri.parse(
@@ -362,8 +348,6 @@ class MapProvider with ChangeNotifier {
           lineWidth: 4.0,
         ));
       }
-    } else {
-      print('No current location');
     }
 
     if (response.statusCode == 200) {
@@ -388,101 +372,141 @@ class MapProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  void _addMarkers() {
+  Future<void> _addMarkers() async {
     if (_mapboxMap == null || _activeRoute == null) return;
 
     try {
-      // Add origin marker
-      _mapboxMap!.annotations.createPointAnnotationManager().then((manager) {
-        final options = PointAnnotationOptions(
+      // Load marker images
+      final pickupIcon = await rootBundle.load('assets/images/location.png');
+      final destinationIcon =
+          await rootBundle.load('assets/images/location.png');
+      final waypointIcon = await rootBundle.load('assets/images/location.png');
+      final locationIcon = await rootBundle.load('assets/images/location.png');
+
+      final manager =
+          await _mapboxMap!.annotations.createPointAnnotationManager();
+
+      // Add pickup marker with location icon
+      manager.create(PointAnnotationOptions(
+        geometry: Point(
+          coordinates: Position(
+            _activeRoute!.origin.longitude,
+            _activeRoute!.origin.latitude,
+          ),
+        ),
+        iconSize: 1.0,
+        image: pickupIcon.buffer.asUint8List(),
+      ));
+      manager.create(PointAnnotationOptions(
+        geometry: Point(
+          coordinates: Position(
+            _activeRoute!.origin.longitude,
+            _activeRoute!.origin.latitude,
+          ),
+        ),
+        iconSize: 0.5,
+        image: locationIcon.buffer.asUint8List(),
+      ));
+
+      // Add destination marker with location icon
+      manager.create(PointAnnotationOptions(
+        geometry: Point(
+          coordinates: Position(
+            _activeRoute!.destination.longitude,
+            _activeRoute!.destination.latitude,
+          ),
+        ),
+        iconSize: 1.0,
+        image: destinationIcon.buffer.asUint8List(),
+      ));
+      manager.create(PointAnnotationOptions(
+        geometry: Point(
+          coordinates: Position(
+            _activeRoute!.destination.longitude,
+            _activeRoute!.destination.latitude,
+          ),
+        ),
+        iconSize: 0.5,
+        image: locationIcon.buffer.asUint8List(),
+      ));
+
+      // Add waypoint markers
+      for (var waypoint in _activeRoute!.waypoints) {
+        manager.create(PointAnnotationOptions(
           geometry: Point(
             coordinates: Position(
-              _activeRoute!.origin.longitude,
-              _activeRoute!.origin.latitude,
+              waypoint.longitude,
+              waypoint.latitude,
             ),
           ),
           iconSize: 1.0,
-          iconImage: 'assets/images/markers/start_marker.png',
-        );
-        manager.create(options);
-      });
-
-      // Add destination marker
-      _mapboxMap!.annotations.createPointAnnotationManager().then((manager) {
-        final options = PointAnnotationOptions(
-          geometry: Point(
-            coordinates: Position(
-              _activeRoute!.destination.longitude,
-              _activeRoute!.destination.latitude,
-            ),
-          ),
-          iconSize: 1.0,
-          iconImage: 'assets/images/markers/end_marker.png',
-        );
-        manager.create(options);
-      });
-
-      // Add waypoint markers if any
-      if (_activeRoute!.waypoints.isNotEmpty) {
-        _mapboxMap!.annotations.createPointAnnotationManager().then((manager) {
-          for (var waypoint in _activeRoute!.waypoints) {
-            final options = PointAnnotationOptions(
-              geometry: Point(
-                coordinates: Position(
-                  waypoint.longitude,
-                  waypoint.latitude,
-                ),
-              ),
-              iconSize: 1.0,
-              iconImage: 'assets/images/markers/waypoint_marker.png',
-            );
-            manager.create(options);
-          }
-        });
+          image: waypointIcon.buffer.asUint8List(),
+        ));
       }
     } catch (e) {
       print('Error adding markers: $e');
     }
   }
 
-  void _drawRoute() {
+  Future<void> _drawRoute() async {
     if (_mapboxMap == null || _activeRoute == null) return;
 
     try {
-      // This is a simplified example - in a real app you would use the Mapbox Directions API
-      // to get actual route coordinates and then draw the route line
+      // Draw route from current location to pickup if we have current location
+      if (_currentPoint != null) {
+        final currentToPickupResponse = await http.get(Uri.parse(
+            'https://api.mapbox.com/directions/v5/mapbox/driving/${_currentPoint!.coordinates.lng},${_currentPoint!.coordinates.lat};${_activeRoute!.origin.longitude},${_activeRoute!.origin.latitude}?geometries=geojson&access_token=$mapboxToken'));
 
-      _mapboxMap!.annotations.createPolylineAnnotationManager().then((manager) {
-        final coordinates = <Position>[];
+        if (currentToPickupResponse.statusCode == 200) {
+          final routeData = jsonDecode(currentToPickupResponse.body);
+          final routeGeometry = routeData['routes'][0]['geometry'];
 
-        // Add origin
-        coordinates.add(Position(
-          _activeRoute!.origin.longitude,
-          _activeRoute!.origin.latitude,
-        ));
+          await _mapboxMap!.style.addSource(GeoJsonSource(
+              id: "current-to-pickup-source", data: jsonEncode(routeGeometry)));
 
-        // Add waypoints in order
-        for (var waypoint in _activeRoute!.waypoints) {
-          coordinates.add(Position(
-            waypoint.longitude,
-            waypoint.latitude,
+          await _mapboxMap!.style.addLayer(LineLayer(
+            id: "current-to-pickup-layer",
+            sourceId: "current-to-pickup-source",
+            lineColor: Colors.red.value,
+            lineWidth: 4.0,
           ));
         }
+      }
 
-        // Add destination
-        coordinates.add(Position(
-          _activeRoute!.destination.longitude,
-          _activeRoute!.destination.latitude,
+      // Draw main route from pickup to destination
+      final coordinates = <Position>[];
+      coordinates.add(Position(
+          _activeRoute!.origin.longitude, _activeRoute!.origin.latitude));
+
+      // Add waypoints to coordinates list
+      for (var waypoint in _activeRoute!.waypoints) {
+        coordinates.add(Position(waypoint.longitude, waypoint.latitude));
+      }
+
+      coordinates.add(Position(_activeRoute!.destination.longitude,
+          _activeRoute!.destination.latitude));
+
+      // Create the route URL with all coordinates
+      final coordinatesString =
+          coordinates.map((pos) => '${pos.lng},${pos.lat}').join(';');
+      final response = await http.get(Uri.parse(
+          'https://api.mapbox.com/directions/v5/mapbox/driving/$coordinatesString?geometries=geojson&access_token=$mapboxToken'));
+
+      if (response.statusCode == 200) {
+        final routeData = jsonDecode(response.body);
+        final routeGeometry = routeData['routes'][0]['geometry'];
+
+        // Add route source and layer
+        await _mapboxMap!.style.addSource(
+            GeoJsonSource(id: "route-source", data: jsonEncode(routeGeometry)));
+
+        await _mapboxMap!.style.addLayer(LineLayer(
+          id: "route-layer",
+          sourceId: "route-source",
+          lineColor: Colors.blue.value,
+          lineWidth: 4.0,
         ));
-
-        final options = PolylineAnnotationOptions(
-          geometry: LineString(coordinates: coordinates),
-          lineColor: 0xFF4882c5, // Using hex color as integer
-          lineWidth: 5.0,
-        );
-
-        manager.create(options);
-      });
+      }
     } catch (e) {
       print('Error drawing route: $e');
     }

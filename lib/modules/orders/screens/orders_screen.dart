@@ -235,13 +235,27 @@ class _OrdersPageState extends State<OrdersPage> {
         trailing: Container(
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
           decoration: BoxDecoration(
-            border: Border.all(color: Colors.green),
+            border: Border.all(
+              color: order.status == "Completed"
+                  ? Colors.green
+                  : order.status == "Rejected"
+                      ? Colors.red
+                      : order.status == "Pending"
+                          ? Colors.amber
+                          : Colors.green,
+            ),
             borderRadius: BorderRadius.circular(12),
           ),
           child: Text(
             order.status,
-            style: const TextStyle(
-              color: Colors.green,
+            style: TextStyle(
+              color: order.status == "Completed"
+                  ? Colors.green
+                  : order.status == "Rejected"
+                      ? Colors.red
+                      : order.status == "Pending"
+                          ? Colors.amber
+                          : Colors.green,
             ),
           ),
         ),

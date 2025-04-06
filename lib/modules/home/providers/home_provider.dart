@@ -10,7 +10,7 @@ class HomeProvider with ChangeNotifier {
   bool _isLoading = false;
   String? _error;
   int _currentOrderIndex = 0;
-  Set<String> _notifiedOrderIds = {};
+  final Set<String> _notifiedOrderIds = {};
 
   List<IncomingOrder> get incomingOrders => _incomingOrders;
   bool get isLoading => _isLoading;

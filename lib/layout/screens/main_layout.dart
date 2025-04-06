@@ -39,7 +39,7 @@ class MainLayout extends StatelessWidget {
             return const OrdersPage();
 
           case 2:
-            return  ProfilePage();
+            return  const ProfilePage();
           default:
             return Container();
         }
