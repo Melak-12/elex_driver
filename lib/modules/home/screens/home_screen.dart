@@ -154,9 +154,24 @@ class _HomePageState extends State<HomePage>
                                 ],
                               ),
                               const Spacer(),
-                              const Text(
-                                '2:00:34',
-                                style: TextStyle(color: Colors.white),
+                              const Spacer(),
+                              StreamBuilder<DateTime>(
+                                stream: Stream.periodic(
+                                    const Duration(seconds: 1),
+                                    (_) => DateTime.now()),
+                                builder: (context, snapshot) {
+                                  final now = snapshot.data ?? DateTime.now();
+                                  final hour = now.hour > 12
+                                      ? now.hour - 12
+                                      : (now.hour == 0 ? 12 : now.hour);
+                                  final amPm = now.hour >= 12 ? 'PM' : 'AM';
+                                  final formattedTime =
+                                      '${hour.toString().padLeft(2, '0')}:${now.minute.toString().padLeft(2, '0')}:${now.second.toString().padLeft(2, '0')} $amPm';
+                                  return Text(
+                                    formattedTime,
+                                    style: const TextStyle(color: Colors.white),
+                                  );
+                                },
                               ),
                             ],
                           ),
