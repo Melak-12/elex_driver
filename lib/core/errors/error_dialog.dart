@@ -1,4 +1,5 @@
 import 'package:elex_driver/core/constants/colors/colors.dart';
+import 'package:elex_driver/core/constants/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -22,7 +23,7 @@ class ErrorDialog extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12.0),
       ),
-      backgroundColor: Colors.grey[200], 
+      backgroundColor: Colors.grey[200],
       child: Padding(
         padding: const EdgeInsets.all(20.0),
         child: Column(
@@ -37,20 +38,15 @@ class ErrorDialog extends StatelessWidget {
             const SizedBox(height: 12),
             Text(
               title,
-              style: const TextStyle(
-                color: Colors.red, // Title in red
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
+              style: AppTextStyles.headline2.copyWith(
+                color: Colors.red,
               ),
             ),
             const SizedBox(height: 8),
             Text(
               message,
               textAlign: TextAlign.center,
-              style: const TextStyle(
-                color: Colors.black87, // Dark text for readability
-                fontSize: 16,
-              ),
+              style: AppTextStyles.bodyText1,
             ),
             const SizedBox(height: 20),
             SizedBox(
@@ -67,8 +63,7 @@ class ErrorDialog extends StatelessWidget {
                 ),
                 child: Text(
                   buttonText,
-                  style: const TextStyle(
-                      fontSize: 16, fontWeight: FontWeight.bold),
+                  style: AppTextStyles.buttonText,
                 ),
               ),
             ),

@@ -5,6 +5,7 @@ import 'package:elex_driver/common/custom_button.dart';
 import 'package:elex_driver/core/constants/app_constants.dart';
 import 'package:elex_driver/core/constants/colors/colors.dart';
 import 'package:elex_driver/core/errors/error_dialog.dart';
+import 'package:elex_driver/core/constants/text_styles.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -97,8 +98,8 @@ class _LoginPageState extends State<LoginPage> {
                           : Icons.visibility_off,
                       color: AppColors.primary,
                     ),
-                    onPressed: () => setState(
-                        () => _obscurePassword = !_obscurePassword),
+                    onPressed: () =>
+                        setState(() => _obscurePassword = !_obscurePassword),
                   ),
                 ),
                 validator: (value) {
@@ -122,25 +123,19 @@ class _LoginPageState extends State<LoginPage> {
                         'By proceeding, you consent to get calls or SMS messages, '
                         'including automated dialer, from ELEX and its affiliates to this number. '
                         'By proceeding you agree to ',
-                    style: TextStyle(color: AppColors.primary, fontSize: 12),
+                    style: AppTextStyles.bodyText1,
                     children: [
                       TextSpan(
                         text: 'our terms of service',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                        ),
+                        style: AppTextStyles.bodyText2,
                       ),
                       TextSpan(
                         text: ' and ',
-                        style: TextStyle(color: AppColors.primary),
+                        style: AppTextStyles.bodyText1,
                       ),
                       TextSpan(
                         text: 'privacy policy.',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                        ),
+                        style: AppTextStyles.bodyText2,
                       ),
                     ],
                   ),

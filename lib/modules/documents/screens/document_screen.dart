@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:elex_driver/core/constants/text_styles.dart';
 
 class DocumentDeliveryPage extends StatelessWidget {
   const DocumentDeliveryPage({super.key});
@@ -14,7 +15,7 @@ class DocumentDeliveryPage extends StatelessWidget {
       body: const Center(
         child: Text(
           "Secure and fast document delivery!",
-          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          style: AppTextStyles.headline2,
         ),
       ),
     );

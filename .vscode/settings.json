@@ -1,5 +1,6 @@
 {
   "java.compile.nullAnalysis.mode": "automatic",
   "java.configuration.updateBuildConfiguration": "interactive",
-  "cmake.sourceDirectory": "/home/melak/Documents/projects/elex/elex_driver/linux"
+  "cmake.sourceDirectory": "/home/melak/Documents/projects/elex/elex_driver/linux",
+  "cmake.ignoreCMakeListsMissing": true
 }

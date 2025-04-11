@@ -63,9 +63,9 @@ class _ProfilePageState extends State<ProfilePage> {
                 }
                 return child!;
               },
-              child: Selector<ProfileProvider, Profile?>(
-                selector: (_, provider) => provider.profile,
-                builder: (context, profile, child) {
+              child: Consumer<ProfileProvider>(
+                builder: (context, provider, child) {
+                  final profile = provider.profile;
                   if (profile == null) {
                     return const Center(child: Text('No profile data found'));
                   }
@@ -108,28 +108,36 @@ class _ProfilePageState extends State<ProfilePage> {
                                 const SizedBox(height: 16),
                                 Text(
                                   profile.name,
-                                  style: const TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.bold,
-                                  ),
+                                  style: AppTextStyles.bodyText1.copyWith(color: AppColors.bodyColor),
                                 ),
                                 Text(
                                   profile.email,
-                                  style: const TextStyle(color: Colors.white70),
+                                  style: AppTextStyles.bodyText1.copyWith(color: AppColors.bodyColor),
                                 ),
-                                const SizedBox(height: 30),
+                                const SizedBox(height: 40),
                               ],
                             ),
                           ),
                           Positioned(
-                            top: 100,
+                            top: 120,
                             right: 50,
                             left: 50,
                             child: CircleAvatar(
                               radius: 50,
-                              backgroundColor: Colors.red,
-                              backgroundImage: AssetImage(profile.profileImage),
+                              backgroundColor: Colors.white,
+                              child: Container(
+                                width: 100,
+                                height: 100,
+                                decoration: const BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  image: DecorationImage(
+                                    image: NetworkImage(
+                                      "https://ntrepidcorp.com/wp-content/uploads/2016/06/team-1-640x640.jpg",
+                                    ),
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                              ),
                             ),
                           ),
                         ],
@@ -202,35 +210,35 @@ class _ProfilePageState extends State<ProfilePage> {
                                                 ),
                                                 Text(
                                                   'Show as available to receive orders',
-                                                  style: TextStyle(
-                                                    color: Colors.grey,
-                                                    fontSize: 12,
-                                                  ),
+                                                  style:
+                                                      AppTextStyles.bodyText1,
                                                 ),
                                               ],
                                             ),
                                           ),
-                                          Selector<ProfileProvider, bool>(
-                                            selector: (_, provider) =>
-                                                provider.isUpdating,
-                                            builder:
-                                                (context, isUpdating, child) {
-                                              return isUpdating
-                                                  ? const CupertinoActivityIndicator(
-                                                      radius: 10)
-                                                  : Switch(
-                                                      value: profile.isOnline,
-                                                      onChanged: (value) {
-                                                        context
-                                                            .read<
-                                                                ProfileProvider>()
-                                                            .toggleOnlineStatus();
-                                                      },
-                                                      activeColor: const Color(
-                                                          0xFF663399),
-                                                    );
-                                            },
-                                          ),
+                                          provider.isUpdating
+                                              ? const Padding(
+                                                  padding: EdgeInsets.all(8.0),
+                                                  child:
+                                                      CupertinoActivityIndicator(
+                                                    radius: 10,
+                                                    color: Color(0xFF663399),
+                                                  ),
+                                                )
+                                              : Switch(
+                                                  focusColor: AppColors.primary,
+                                                  // activeTrackColor: AppColors.primary,
+                                                  inactiveTrackColor:
+                                                      Colors.grey,
+                                                  // thumbColor: MaterialStateProperty.all(Colors.red),
+                                                  value: profile.isOnline,
+                                                  onChanged: (value) {
+                                                    provider
+                                                        .toggleOnlineStatus();
+                                                  },
+                                                  activeColor:
+                                                      const Color(0xFF663399),
+                                                ),
                                         ],
                                       ),
                                       const SizedBox(height: 20),
@@ -316,14 +324,14 @@ class _ProfilePageState extends State<ProfilePage> {
             children: [
               Text(
                 label,
-                style: const TextStyle(
+                style: AppTextStyles.bodyText1.copyWith(
                   color: Colors.grey,
                   fontSize: 12,
                 ),
               ),
               Text(
                 value,
-                style: AppTextStyles.headline2.copyWith(fontSize: 14),
+                style: AppTextStyles.headline2,
               ),
             ],
           ),

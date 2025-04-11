@@ -38,7 +38,7 @@ class _MapScreenState extends State<MapScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
+        title:const Text(
           "Ongoing order",
           style: AppTextStyles.headline2,
         ),
@@ -121,10 +121,7 @@ class _MapScreenState extends State<MapScreen> {
                               const SizedBox(height: 4),
                               Text(
                                 'Customer waiting for delivery',
-                                style: TextStyle(
-                                  color: Colors.white.withOpacity(0.8),
-                                  fontSize: 12,
-                                ),
+                                style: AppTextStyles.bodyText1,
                               ),
                             ],
                           ),
@@ -202,7 +199,7 @@ class _MapScreenState extends State<MapScreen> {
                             children: [
                               Text(
                                 'Estimated Arrival',
-                                style: TextStyle(
+                                style: AppTextStyles.bodyText1.copyWith(
                                   color: Colors.white.withOpacity(0.8),
                                   fontSize: 12,
                                 ),
@@ -215,11 +212,7 @@ class _MapScreenState extends State<MapScreen> {
                                   SizedBox(width: 2),
                                   Text(
                                     '15 minutes',
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 16,
-                                    ),
+                                    style: AppTextStyles.headline2,
                                   ),
                                 ],
                               ),

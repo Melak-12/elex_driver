@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:elex_driver/core/constants/text_styles.dart';
 
 class GasDeliveryPage extends StatelessWidget {
   const GasDeliveryPage({super.key});
@@ -14,7 +15,7 @@ class GasDeliveryPage extends StatelessWidget {
       body: const Center(
         child: Text(
           "Reliable gas delivery at your service!",
-          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          style: AppTextStyles.headline2,
         ),
       ),
     );

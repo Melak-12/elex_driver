@@ -55,10 +55,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         onPressed: () => context.go('/login'),
                         child: const Text(
                           "Skip",
-                          style: TextStyle(
-                              color: AppColors.primary,
-                              fontSize: 17,
-                              fontWeight: FontWeight.bold),
+                          style: AppTextStyles.headline2,
                         ),
                       )
                     : const SizedBox(),

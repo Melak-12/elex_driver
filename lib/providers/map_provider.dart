@@ -9,7 +9,6 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:http/http.dart' as http;
 import 'package:elex_driver/core/keys/mapbox_token.dart';
 import 'package:elex_driver/modules/map/models/map_model.dart';
-import 'package:collection/collection.dart';
 
 class MapProvider with ChangeNotifier {
   List<MapLocation> _locations = [];
