@@ -130,7 +130,11 @@ class _HomePageState extends State<HomePage> {
 
   Widget _buildOrderCard(IncomingOrder order, HomeProvider provider) {
     return Container(
+        margin: const EdgeInsets.symmetric(
+          horizontal: 6),
+
       decoration: BoxDecoration(
+        
         color: Colors.white,
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
