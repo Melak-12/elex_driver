@@ -1,0 +1,69 @@
+PODS:
+  - Flutter (1.0.0)
+  - geolocator_apple (1.2.0):
+    - Flutter
+    - FlutterMacOS
+  - image_picker_ios (0.0.1):
+    - Flutter
+  - location (0.0.1):
+    - Flutter
+  - mapbox_maps_flutter (2.7.0):
+    - Flutter
+    - MapboxMaps (= 11.11.0)
+    - Turf (= 4.0.0)
+  - MapboxCommon (24.11.0):
+    - Turf (= 4.0.0)
+  - MapboxCoreMaps (11.11.0):
+    - MapboxCommon (~> 24.11.0)
+  - MapboxMaps (11.11.0):
+    - MapboxCommon (= 24.11.0)
+    - MapboxCoreMaps (= 11.11.0)
+    - Turf (= 4.0.0)
+  - permission_handler_apple (9.3.0):
+    - Flutter
+  - Turf (4.0.0)
+
+DEPENDENCIES:
+  - Flutter (from `Flutter`)
+  - geolocator_apple (from `.symlinks/plugins/geolocator_apple/darwin`)
+  - image_picker_ios (from `.symlinks/plugins/image_picker_ios/ios`)
+  - location (from `.symlinks/plugins/location/ios`)
+  - mapbox_maps_flutter (from `.symlinks/plugins/mapbox_maps_flutter/ios`)
+  - permission_handler_apple (from `.symlinks/plugins/permission_handler_apple/ios`)
+
+SPEC REPOS:
+  trunk:
+    - MapboxCommon
+    - MapboxCoreMaps
+    - MapboxMaps
+    - Turf
+
+EXTERNAL SOURCES:
+  Flutter:
+    :path: Flutter
+  geolocator_apple:
+    :path: ".symlinks/plugins/geolocator_apple/darwin"
+  image_picker_ios:
+    :path: ".symlinks/plugins/image_picker_ios/ios"
+  location:
+    :path: ".symlinks/plugins/location/ios"
+  mapbox_maps_flutter:
+    :path: ".symlinks/plugins/mapbox_maps_flutter/ios"
+  permission_handler_apple:
+    :path: ".symlinks/plugins/permission_handler_apple/ios"
+
+SPEC CHECKSUMS:
+  Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
+  geolocator_apple: 66b711889fd333205763b83c9dcf0a57a28c7afd
+  image_picker_ios: c560581cceedb403a6ff17f2f816d7fea1421fc1
+  location: d5cf8598915965547c3f36761ae9cc4f4e87d22e
+  mapbox_maps_flutter: 68d1bcbe0817485955d2fcd57bfb794a85b606b7
+  MapboxCommon: 68daa8291a799ba2e24050160a1eb71e090ac0ca
+  MapboxCoreMaps: 99401a4a1cfddbd5166d29db43d26e7afa28acfd
+  MapboxMaps: 5199095d616bbf02d99f6287dbb2023e66c6987c
+  permission_handler_apple: 9878588469a2b0d0fc1e048d9f43605f92e6cec2
+  Turf: c9eb11a65d96af58cac523460fd40fec5061b081
+
+PODFILE CHECKSUM: 1959d098c91d8a792531a723c4a9d7e9f6a01e38
+
+COCOAPODS: 1.15.2
