@@ -1,7 +1,6 @@
 import 'package:elex_driver/core/constants/colors/colors.dart';
 import 'package:elex_driver/core/constants/text_styles.dart';
 import 'package:elex_driver/modules/profile/providers/profile_provider.dart';
-import 'package:elex_driver/modules/profile/models/profile_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';

@@ -106,11 +106,11 @@ class _MapScreenState extends State<MapScreen> {
                               size: 24, color: Colors.white),
                         ),
                         const SizedBox(width: 12),
-                        Expanded(
+                        const Expanded(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              const Text(
+                              Text(
                                 'Arada, Addis Ababa',
                                 style: TextStyle(
                                   color: Colors.white,
@@ -118,7 +118,7 @@ class _MapScreenState extends State<MapScreen> {
                                   fontSize: 16,
                                 ),
                               ),
-                              const SizedBox(height: 4),
+                              SizedBox(height: 4),
                               Text(
                                 'Customer waiting for delivery',
                                 style: AppTextStyles.bodyText1,
