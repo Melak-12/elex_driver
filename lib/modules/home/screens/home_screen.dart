@@ -2,6 +2,7 @@ import 'package:elex_driver/core/constants/colors/colors.dart';
 import 'package:elex_driver/core/constants/text_styles.dart';
 import 'package:elex_driver/modules/home/models/home_model.dart';
 import 'package:elex_driver/modules/home/providers/home_provider.dart';
+import 'package:elex_driver/modules/home/providers/notification_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
@@ -57,6 +58,22 @@ class _HomePageState extends State<HomePage> {
                 context.read<HomeProvider>().fetchNewOrder();
               },
             ),
+                 IconButton(
+              onPressed: () {
+                final notificationProvider =
+                    context.read<NotificationProvider>();
+                notificationProvider.showNotification(
+                  title: "New Order Alert",
+                  body: "You Got new order !",
+                  
+                );
+              },
+              icon: const Icon(
+                Icons.notifications_none,
+                size: 30,
+                color: AppColors.primary,
+              ),
+            ),
           ],
         ),
         body: Consumer<HomeProvider>(
@@ -92,11 +109,18 @@ class _HomePageState extends State<HomePage> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Icon(
-            Icons.notifications_none,
-            size: 60,
-            color: AppColors.primary,
-          ),
+     
+          // IconButton(
+          //   onPressed: () => {
+          //     debugPrint('\x1B[32mnotification pressed\x1B[0m'),
+          //   },
+          //   icon: const Icon(
+          //     Icons.notifications_none,
+          //     size: 60,
+          //     color: AppColors.primary,
+          //   ),
+          // ),
+          
           const SizedBox(height: 16),
           const Text(
             'Waiting for orders',

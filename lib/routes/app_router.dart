@@ -22,7 +22,7 @@ const String gas = '/gas';
 const String profile = '/profile';
 
 final GoRouter appRouter = GoRouter(
-  initialLocation: layout,
+  initialLocation: splash,
   routes: [
     GoRoute(
         path: onBoarding,

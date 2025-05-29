@@ -1,4 +1,5 @@
 import 'package:elex_driver/modules/home/providers/home_provider.dart';
+import 'package:elex_driver/modules/home/providers/notification_provider.dart';
 import 'package:elex_driver/modules/orders/providers/order_provider.dart';
 import 'package:elex_driver/modules/profile/providers/profile_provider.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +14,7 @@ import 'package:elex_driver/routes/app_router.dart';
 
 void main() {
   runApp(const MyApp());
+  
 }
 
 class MyApp extends StatelessWidget {
@@ -30,6 +32,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => ProfileProvider()),
         ChangeNotifierProvider(create: (_) => OrderProvider()),
         ChangeNotifierProvider(create: (_) => HomeProvider()),
+        ChangeNotifierProvider(create: (_) => NotificationProvider()),
       ],
       child: MaterialApp.router(
         debugShowCheckedModeBanner: false,
